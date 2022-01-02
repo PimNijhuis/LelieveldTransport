@@ -18,6 +18,7 @@ import { Divider } from "@material-ui/core";
 
 import logoInslag from "../inslag.PNG"
 import logoUitslag from "../uitslag.PNG"
+import lelieveld from "../lelieveld.png"
 
 export default function ActionMenu(props) {
   const [open, setOpen] = React.useState(false);
@@ -52,8 +53,11 @@ export default function ActionMenu(props) {
   };
 
   return (
-    <div className="HeaderWrapper">
-      <h2 style={{ padding: "50px 5px 0px" }}>Maak uw keuze:</h2>
+    <div className="HeaderWrapper">  
+      <div className="HeaderTopTextWrapper">
+        <img src={lelieveld} alt="LogoLelie" width="80" height="50" style={{ padding: "10px 10px 0px"}}/>
+        <h2 style={{ padding: "10px 10px 0px" }}>Lelieveld Transport</h2>
+        </div>
       <div
         style={{
           display: "flex",
