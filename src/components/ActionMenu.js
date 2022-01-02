@@ -16,9 +16,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Divider } from "@material-ui/core";
 
-import logoInslag from "../inslag.PNG"
-import logoUitslag from "../uitslag.PNG"
-import lelieveld from "../lelieveld.png"
+import logoInslag from "../inslag.PNG";
+import logoUitslag from "../uitslag.PNG";
+import lelieveld from "../lelieveld.png";
 
 export default function ActionMenu(props) {
   const [open, setOpen] = React.useState(false);
@@ -53,18 +53,30 @@ export default function ActionMenu(props) {
   };
 
   return (
-    <div className="HeaderWrapper">  
+    <div className="HeaderWrapper">
       <div className="HeaderTopTextWrapper">
-        <img src={lelieveld} alt="LogoLelie" width="80" height="50" style={{ padding: "10px 10px 0px"}}/>
-        <h2 style={{ padding: "10px 10px 0px" }}>Lelieveld Transport</h2>
-        </div>
+        <img
+          src={lelieveld}
+          alt="LogoLelie"
+          width="80"
+          height="50"
+          style={{ padding: "10px 10px 0px" }}
+        />
+
+        <h2
+          style={{ textAlign: "center", width: "100%", position: "absolute" }}
+        >
+          Lelieveld Transport
+        </h2>
+      </div>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          margin: "5px 5px 5px 5px",
+          justifyContent: "space-evenly",
+          margin: "50px 0px 50px 0px",
+          height: "500px",
         }}
       >
         <Link to={"/scanner"} style={{ textDecoration: "none" }}>
@@ -74,14 +86,22 @@ export default function ActionMenu(props) {
             style={{
               minWidth: "300px",
               minHeight: "100px",
-              margin: "30px 10px 10px",
+              margin: "40px 0px 40px",
+              justifyContent: "space-between",
             }}
           >
             <div>
-              {"Inslag"}
-              <br />
-              <img src={logoInslag} alt="LogoInslag" width="150" height="100"/>
+              <img
+                src={logoInslag}
+                alt="logoInslag"
+                width="150"
+                height="100"
+                marginLeft="0px"
+              />
             </div>
+            <h3 style={{ textTransform: "none", marginRight: "30px" }}>
+              {"Inslag"}
+            </h3>
           </Button>
         </Link>
         <Link to={"/scanner"} style={{ textDecoration: "none" }}>
@@ -91,19 +111,30 @@ export default function ActionMenu(props) {
             style={{
               minWidth: "300px",
               minHeight: "100px",
-              margin: "30px 10px 10px",
+              margin: "40px 0px 40px",
+              justifyContent: "space-evenly",
             }}
           >
+            <h3 style={{ textTransform: "none" }}>{"Uitslag"}</h3>
             <div>
-              {"Uitslag"}
-              <br />
-              <img src={logoUitslag} alt="LogoUitslag" width="150" height="100"/>
+              <img
+                src={logoUitslag}
+                alt="LogoUitslag"
+                width="150"
+                height="100"
+              />
             </div>
           </Button>
         </Link>
       </div>
 
-      <center>
+      <center
+        style={{
+          height: "100px",
+          bottom: "0%",
+          // marginTop: "210px",
+        }}
+      >
         <Divider />
         <List component="nav" aria-labelledby="nested-list-subheader">
           <ListItem button onClick={handleClickOpen}>
@@ -122,12 +153,7 @@ export default function ActionMenu(props) {
           <DialogTitle id="alert-dialog-title">
             {"Weet u zeker dat u wilt uitloggen?"}
           </DialogTitle>
-          {/* <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent> */}
+
           <DialogActions>
             <Button onClick={handleNo} color="primary">
               Nee
