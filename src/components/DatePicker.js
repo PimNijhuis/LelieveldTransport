@@ -8,7 +8,7 @@ import nl from "date-fns/locale/nl";
 // zie https://github.com/Hacker0x01/react-datepicker/blob/master/docs/datepicker.md
 
 function DatePickerComponent(props) {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date(Date.now()));
 
   //const [endDate, setEndDate] = useState(null);
   const [endDate, setEndDate] = useState(new Date(Date.now() + 6.048e8));
@@ -29,7 +29,8 @@ function DatePickerComponent(props) {
   }, [startDate, endDate]);
 
   return (
-    <div>
+    // <div className="react-datepicker-containers">
+    <>
       <DatePicker
         selected={startDate}
         onChange={onChangeStart}
@@ -37,12 +38,18 @@ function DatePickerComponent(props) {
         dateFormat="dd.MM.yyyy"
         showWeekNumbers
         locale="nl"
+        maxDate={endDate}
+        popperModifiers={{
+          preventOverflow: {
+            enabled: true,
+          },
+        }}
       />
-      <br />
+
       <>{"   -   "}</>
-      <br />
 
       <DatePicker
+        popperPlacement="bottom-end"
         selected={endDate}
         onChange={onChangeEnd}
         endDate={endDate}
@@ -51,7 +58,7 @@ function DatePickerComponent(props) {
         showWeekNumbers
         locale="nl"
       />
-    </div>
+    </>
   );
 }
 

@@ -13,19 +13,19 @@ import Paper from "@material-ui/core/Paper";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Link } from "react-router-dom";
 import Box from "@material-ui/core/Box";
+import { Redirect } from "react-router-dom";
+import LazyLoad from "react-lazyload";
 
 import { formatPrice } from "../utils/priceUtil";
 import {
   setOrderId,
   setHubId,
   setDeliveryDate,
+  setPickuppoint,
 } from "../services/order/actions";
 
 function TableComponent(props) {
-  // axios.defaults.headers.common["Authorization"] =
-  //   "5ff3d38f-fdd1-448a-9370-0112d84c8b00";
-  // axios.defaults.headers.common["Token"] =
-  //   "4b3b596e-1b5b-4026-9051-eb752f818d98";
+  const [redirect, setRedirect] = React.useState(false);
 
   var columnsMapping = props.header;
   var data = props.body;
@@ -39,6 +39,7 @@ function TableComponent(props) {
         props.setOrderId(rowData.supplier_id);
         props.setHubId(rowData.hub);
         props.setDeliveryDate(rowData.delivery_date);
+        props.setPickuppoint(rowData.pickuppoint);
         break;
       case "SuppliersOrders":
         props.setOrderId(rowData.order_number);
@@ -54,18 +55,21 @@ function TableComponent(props) {
   const getColumnComponent = (column, rowData) => {
     switch (column.dataName) {
       case "rows":
-      case 'quantity':
-      case 'delivery_date':
-      case 'package':
-      case 'order_id':
-      case 'order_number':
-      case 'code':
+      case "quantity":
+      case "delivery_date":
+      case "package":
+      case "order_id":
+      case "order_number":
+      case "code":
         return <Box textAlign="center">{rowData[column.dataName]}</Box>;
       case "amount":
       case "salesprice":
-        return <Box textAlign="center">{formatPrice(rowData[column.dataName])}</Box>;
-          // return <Box textAlign="center">{rowData[column.dataName]}</Box>;
-
+        return (
+          <Box textAlign="center">{formatPrice(rowData[column.dataName])}</Box>
+        );
+      //return <Box textAlign="center">{rowData[column.dataName]}</Box>;
+      case "combi":
+        return rowData["name"] + "\n" + rowData["supplier"];
       case "arrow_button_order":
         return (
           <Link to="/order" style={{ textDecoration: "none" }}>
@@ -80,34 +84,88 @@ function TableComponent(props) {
     }
   };
 
-  return (
-    <TableContainer component={Paper}>
-      <Table className="table" aria-label="spanning table">
-        <TableHead>
-          <TableRow>
-            {columnsMapping.map((column) => (
-              <TableCell align="left">{column.name}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((rowData) => (
-            <TableRow key={data.id}>
+  var isOrderScreen = window.location.hash === "#/order";
+
+  if (redirect) {
+    return <Redirect to="/order" />;
+  } else if (
+    (props.currentType === "HubOrders" ||
+      props.currentType === "HubOrdersSuppliers" ||
+      props.currentType === "Orders" ||
+      props.currentType === "SuppliersOrders") &&
+    !isOrderScreen
+  ) {
+    return (
+      <TableContainer component={Paper}>
+        <Table className="table" aria-label="spanning table">
+          <TableHead>
+            <TableRow>
               {columnsMapping.map((column) => (
-                <TableCell align="left" padding="none">
-                  {getColumnComponent(column, rowData)}
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  {column.name}
                 </TableCell>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+          </TableHead>
+          <TableBody>
+            {data.map((rowData) => (
+              <TableRow
+                style={{ height: 50 }}
+                key={data.id}
+                onClick={() => {
+                  setData(rowData);
+                  setRedirect(true);
+                }}
+              >
+                {columnsMapping.map((column) => (
+                  <TableCell align="left" padding="none">
+                    <LazyLoad placeholder="Loading">
+                      {getColumnComponent(column, rowData)}
+                    </LazyLoad>
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  } else {
+    return (
+      <TableContainer component={Paper}>
+        <Table className="table" aria-label="spanning table">
+          <TableHead>
+            <TableRow style={{ height: 50 }}>
+              {columnsMapping.map((column) => (
+                <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  {column.name}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((rowData) => (
+              <TableRow key={data.id}>
+                {columnsMapping.map((column) => (
+                  <TableCell align="left" padding="none">
+                    <LazyLoad placeholder="Loading">
+                      {console.log(rowData)}
+                      {getColumnComponent(column, rowData)}
+                    </LazyLoad>
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
   currentType: state.general.currentType,
+  isSingleOrder: state.general.isSingleOrder,
 });
 
 export default connect(mapStateToProps, {
@@ -115,4 +173,5 @@ export default connect(mapStateToProps, {
   setOrderId,
   setHubId,
   setDeliveryDate,
+  setPickuppoint,
 })(TableComponent);

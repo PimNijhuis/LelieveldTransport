@@ -1,29 +1,42 @@
 import React, { useState } from "react";
 import QrReader from "modern-react-qr-reader";
-// import { makeStyles } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
 import { setOrderId } from "../services/order/actions";
 import { updateCurrentType } from "../services/general/actions";
 import { connect } from "react-redux";
-
-// const useStyles = makeStyles((theme) => ({
-//   scanner: {
-//     height: '100%',
-//     width: '100%',
-//   },
-// }));
-
-// TODO: Weet niet of ie het op mobiel gaat doen
+import axios from "axios";
 
 function ScannerComponent(props) {
   // const classes = useStyles();
   const [hubOrderId, setHubOrderId] = useState("");
 
+  const validateHubOrder = (data) => {
+    const requestData = {
+      id: data,
+    };
+    axios
+      .post("/fetch_order_by_qrcode", requestData)
+      .then((response) => {
+        if (response.data.code === 500) {
+          alert("Deze order is niet beschikbaar");
+          return;
+        } else {
+          setHubOrderId(data);
+          props.setOrderId(data);
+          props.updateCurrentType("Pickup");
+          return;
+        }
+      })
+      .catch((err) => {
+        console.log(
+          "[order.actions.js] confirmOrder || Could not confirm order. Try again later."
+        );
+      });
+  };
+
   const handleScan = (data) => {
     if (data) {
-      setHubOrderId(data);
-      props.setOrderId(data);
-      props.updateCurrentType("Pickup");
+      validateHubOrder(data);
     }
   };
 
@@ -37,17 +50,10 @@ function ScannerComponent(props) {
     return <Redirect to="/order" />;
   } else {
     return (
-      // <div>
       <>
         <p>{hubOrderId}</p>
-        <QrReader
-          // legacymode={false} TODO: check allowance for camera
-          // style={classes.scanner}
-          onError={handleError}
-          onScan={handleScan}
-        />
-        </>
-
+        <QrReader onError={handleError} onScan={handleScan} />
+      </>
     );
   }
 }

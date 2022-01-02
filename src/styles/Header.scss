@@ -1,6 +1,5 @@
 .HeaderWrapper {
-  margin-bottom: 32px;
-  padding: 32px;
+  // height: 20vh;
   color: #333333;
   background-color: #ffffff;
   border-radius: 8px;
@@ -10,13 +9,21 @@
 .HeaderTopTextWrapper {
   display: flex;
   align-items: center;
+  // padding-top: 20px;
+  height: 50px;
+}
+
+.HeaderBackButtonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
   height: 32px;
 }
 
 .HeaderLogo {
   display: inline-block;
   height: 100%;
-  margin: auto 0;
+  margin: 0;
 }
 
 .HeaderText {
@@ -27,20 +34,28 @@
   font-size: 1.4rem;
 }
 
-.locationDropdown {
-  margin-top: 20px;
-}
-
 .react-datepicker__input-container input {
   text-align: center;
   border: 2px solid #696969;
   background-color: #ffffff;
   padding: 4px;
   border-radius: 4px;
+  width: 80%;
 }
+
 .datePicker {
   text-align: center;
 }
+
+.react-datepicker-wrapper {
+  margin: 0;
+  width: 40%;
+  // text-align: center;
+}
+
+// .react-datepicker__input-container {
+//   width: 40%;
+// }
 
 .react-datepicker__tab-loop {
   display: inline-block;

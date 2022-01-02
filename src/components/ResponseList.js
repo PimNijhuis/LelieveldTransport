@@ -15,6 +15,7 @@ import {
   updateCurrentType,
   updateDateRange,
 } from "../services/general/actions";
+import Card from "../components/Card";
 
 function ResponseList(props) {
   const usePropChangeEffect = (func, deps) => {
@@ -65,75 +66,26 @@ function ResponseList(props) {
     switch (props.currentType) {
       // Van Hub:
       case "HubOrders":
-        tableHeader = [
-          { name: "Klant", dataName: "customer" },
-          { name: "Datum", dataName: "delivery_date" },
-          { name: "Afhaalpunt", dataName: "pickuppoint" },
-          { name: "", dataName: "arrow_button_order" },
-        ];
         tableBody = props.hubOrders;
 
-        return <Table header={tableHeader} body={tableBody} />;
+        return <Card body={tableBody} />;
       case "HubOrdersSuppliers":
-        tableHeader = [
-          { name: "Leverancier", dataName: "supplier" },
-          { name: "Afhaalpunt", dataName: "pickuppoint" },
-          { name: "Datum", dataName: "delivery_date" },
-          { name: "#", dataName: "rows"},
-          { name: "Bedrag", dataName: "amount" },
-          { name: "", dataName: "arrow_button_order" },
-        ];
         tableBody = props.hubOrdersSuppliers;
-        return <Table header={tableHeader} body={tableBody} />;
+
+        return <Card body={tableBody} />;
 
       case "Products":
-        tableHeader = [
-          { name: "Code", dataName: "code" },
-          { name: "Naam", dataName: "name" },
-          { name: "Afhaalpunt", dataName: "pickuppoint" },
-          { name: "Eenheid", dataName: "package" },
-          { name: "Aantal", dataName: "quantity" },
-          { name: "Datum", dataName: "delivery_date" },
-          { name: "Bedrag", dataName: "amount" },
-        ];
         tableBody = props.hubProducts;
-        return <Table header={tableHeader} body={tableBody} />;
+        return <Card body={tableBody} />;
 
       // Van Supplier
       case "HubProducts":
-        tableHeader = [
-          { name: "Code", dataName: "code" },
-          { name: "Naam", dataName: "name" },
-          // TODO hier moet eenheid maar zit niet in API
-          { name: "Afhaalpunt", dataName: "pickuppoint" },
-          { name: "Aantal", dataName: "quantity" },
-          { name: "Datum", dataName: "delivery_date" },
-        ];
         tableBody = props.suppliersHubProducts;
-        return <Table header={tableHeader} body={tableBody} />;
+        return <Card body={tableBody} />;
 
       case "Orders":
-        tableHeader = [
-          { name: "Order#", dataName: "order_id" },
-          { name: "Afleverdatum", dataName: "delivery_date" },
-          { name: "Bedrag", dataName: "amount" },
-          { name: "", dataName: "arrow_button_order" },
-        ];
         tableBody = props.orders;
-        return <Table header={tableHeader} body={tableBody} />;
-
-      case "SuppliersOrders":
-        tableHeader = [
-          { name: "Order#", dataName: "order_number" },
-          { name: "Leverancier", dataName: "supplier" },
-          { name: "Afhaalpunt", dataName: "pickuppoint" },
-          { name: "Datum", dataName: "delivery_date" },
-          { name: "Bedrag", dataName: "amount" },
-          { name: "", dataName: "arrow_button_order" },
-        ];
-        tableBody = props.suppliersOrders;
-        return <Table header={tableHeader} body={tableBody} />;
-
+        return <Card body={tableBody} />;
       default:
         break;
     }

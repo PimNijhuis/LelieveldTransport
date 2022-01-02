@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   text: {
     display: "flex",
     justifyContent: "center",
-    marginBottom: 0
+    marginBottom: 0,
   },
 }));
 
@@ -23,10 +23,11 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 const whichList = (props, classes) => {
-  if (props.mainHub) {
+  if (props.hub && props.supplier) {
+    //&&supplier
     return (
       <List component="nav" aria-label="secondary mailbox folders">
-      <h4 className={(classes.text)}>Afhaalpunt</h4>
+        <h4 className={classes.text}>Afhaalpunt</h4>
         <hr />
         <ListItemLink
           href="#response-list"
@@ -50,17 +51,16 @@ const whichList = (props, classes) => {
         </ListItemLink>
 
         <br />
-      <h4 className={(classes.text)}>Boer</h4>
+        <h4 className={classes.text}>Boer</h4>
         <hr />
 
-
-        <ListItemLink
+        {/* <ListItemLink
           href="#response-list"
           onClick={() => props.updateCurrentType("SuppliersOrders")}
         >
           <ListItemText primary="Te ontvangen" />
-        </ListItemLink>
-        <Divider />
+        </ListItemLink> */}
+        {/* <Divider /> */}
         <ListItemLink
           href="#response-list"
           onClick={() => props.updateCurrentType("Orders")}
@@ -79,13 +79,15 @@ const whichList = (props, classes) => {
   } else if (props.supplier) {
     return (
       <List component="nav" aria-label="secondary mailbox folders">
-        <ListItemLink
+        <h4 className={classes.text}>Boer</h4>
+        <hr />
+        {/* <ListItemLink
           href="#response-list"
           onClick={() => props.updateCurrentType("SuppliersOrders")}
         >
           <ListItemText primary="Te ontvangen" />
         </ListItemLink>
-        <Divider />
+        <Divider /> */}
         <ListItemLink
           href="#response-list"
           onClick={() => props.updateCurrentType("Orders")}
@@ -104,6 +106,8 @@ const whichList = (props, classes) => {
   } else if (props.hub) {
     return (
       <List component="nav" aria-label="secondary mailbox folders">
+        <h4 className={classes.text}>Afhaalpunt</h4>
+        <hr />
         <ListItemLink
           href="#response-list"
           onClick={() => props.updateCurrentType("HubOrders")}

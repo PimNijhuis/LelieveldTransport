@@ -1,9 +1,15 @@
-import { SET_ORDER_ID, SET_HUB_ID, SET_DELIVERY_DATE } from "./actionTypes";
+import {
+  SET_ORDER_ID,
+  SET_HUB_ID,
+  SET_DELIVERY_DATE,
+  SET_PICKUP_POINT,
+} from "./actionTypes";
 
 const initialState = {
   orderId: "",
   hubId: "",
   deliveryDate: "",
+  pickuppoint: "",
 };
 
 export default function reducer(state = initialState, action) {
@@ -22,6 +28,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         deliveryDate: action.payload,
+      };
+    case SET_PICKUP_POINT:
+      return {
+        ...state,
+        pickuppoint: action.payload,
       };
     default:
       return state;

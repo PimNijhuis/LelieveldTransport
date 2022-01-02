@@ -2,11 +2,39 @@ import React from "react";
 import { connect } from "react-redux";
 import "../styles/Header.scss";
 import DatePicker from "./DatePicker";
+import BackButton from "../components/BackButton";
 
 function Header(props) {
-  const datePicker = () => {
+  const needsDatePicker = () => {
     if (props.needsDatePicker === "Yes") {
-      return <DatePicker />;
+      return (
+        <>
+          <br />
+          <div className="datePicker">
+            <DatePicker />
+          </div>
+          <br />
+        </>
+      );
+    }
+  };
+
+  const needsBackButton = () => {
+    switch (props.title) {
+      // case "Bestellingen":
+      // case "Te ontvangen":
+      // case "Te ontvangen (Producten)":
+      // case "Leveringen":
+      // case "Leveringen (Producten)":
+      case "Inhoud Order":
+        return (
+          <div className={"HeaderBackButtonWrapper"}>
+            <BackButton />
+          </div>
+        );
+
+      default:
+        break;
     }
   };
 
@@ -17,8 +45,9 @@ function Header(props) {
           <img src={props.logo} alt="Logo" className="HeaderLogo" />
           <h1 className="HeaderText">{props.title}</h1>
         </div>
-        <br />
-        <div className="datePicker">{datePicker()}</div>
+
+        {needsDatePicker()}
+        {needsBackButton()}
       </header>
     </div>
   );

@@ -10,6 +10,8 @@ import axios from "axios";
 import { formatPrice } from "../utils/priceUtil";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import Card from "./Card";
 
 function SingleOrder(props) {
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,7 @@ function SingleOrder(props) {
 
   useEffect(() => {
     fetchData();
+
     // disable fetchAll dependency warning
     // eslint-disable-next-line
   }, [props.orderId]);
@@ -30,8 +33,7 @@ function SingleOrder(props) {
       case "HubOrders":
         setHeader([
           { name: "Code", dataName: "code" },
-          { name: "Naam", dataName: "name" },
-          { name: "Leverancier", dataName: "supplier" },
+          { name: "Naam/Leverancier", dataName: "combi" },
           { name: "Eenheid", dataName: "package" },
           { name: "Aantal", dataName: "quantity" },
           { name: "Prijs", dataName: "salesprice" },
@@ -47,18 +49,14 @@ function SingleOrder(props) {
             setOrder(response_data);
             setLoading(false);
           })
-          .catch((err) => {
-            // console.log("Fetching order data in SingleOrder.js went wrong... ");
-          });
+          .catch((err) => {});
 
       case "HubOrdersSuppliers":
         setHeader([
           { name: "Code", dataName: "code" },
-          { name: "Naam", dataName: "name" },
-          { name: "Leverancier", dataName: "supplier" },
+          { name: "Naam/Leverancier", dataName: "combi" },
           { name: "Aantal", dataName: "quantity" },
           { name: "Prijs", dataName: "salesprice" },
-          { name: "Amount", dataName: "amount" }, // TODO dit moet package zijn, maar zit niet in API
         ]);
         requestData = {
           delivery_date: props.deliveryDate,
@@ -73,9 +71,7 @@ function SingleOrder(props) {
             setOrder(response_data);
             setLoading(false);
           })
-          .catch((err) => {
-            // console.log("Fetching order data in SingleOrder.js went wrong... ");
-          });
+          .catch((err) => {});
 
       // Supplier
       case "Orders":
@@ -83,7 +79,7 @@ function SingleOrder(props) {
         setHeader([
           { name: "Code", dataName: "code" },
           { name: "Naam", dataName: "name" },
-          { name: "Package", dataName: "package" },
+          { name: "Verpakking", dataName: "package" },
           { name: "Aantal", dataName: "quantity" },
           { name: "Prijs", dataName: "salesprice" },
         ]);
@@ -99,57 +95,92 @@ function SingleOrder(props) {
             setOrder(response_data);
             setLoading(false);
           })
-          .catch((err) => {
-            // console.log("Fetching order data in SingleOrder.js went wrong... ");
-          });
+          .catch((err) => {});
 
       default:
         break;
     }
   };
 
-  switch (props.currentType) {
-    case "Orders":
-    case "SuppliersOrders":
-      return (
-        <>
-          <h2>{order.supplier}</h2>
-          <h2>{order.note}</h2>
-          <h2>{"Afleverdatum: " + order.delivery_date}</h2>
-          <h2>{"Order status: " + order.order_status}</h2>
-          {!loading && <Table body={order.rows} header={header} />}
-        </>
-      );
-    case "Pickup":
-      return (
-        <>
-          <h2>{order.customer}</h2>
-          <h2>{"Bedrag: " + formatPrice(order.amount)}</h2>
-          <h2>{"Afleverdatum: " + order.delivery_date}</h2>
-          {!loading && <Table body={order.rows} header={header} />}
-          <br />
-          <div align="center">
-            <Link to="/sign-order" style={{ textDecoration: "none" }}>
-              <Button color="primary" variant="contained">
-                {"Order afmelden"}
-              </Button>
-            </Link>
-          </div>
-        </>
-      );
-    case "HubOrders":
-      return (
-        <>
-          <h2>{order.customer}</h2>
-          <h2>{"Bedrag: " + formatPrice(order.amount)}</h2>
-          <h2>{"Afleverdatum: " + order.delivery_date}</h2>
-          {!loading && <Table body={order.rows} header={header} />}
-        </>
-      );
-    case "HubOrdersSuppliers":
-      return <>{!loading && <Table body={order} header={header} />}</>;
-    default:
-      return <>{!loading && <Table body={order} header={header} />}</>;
+  if (order) {
+    switch (props.currentType) {
+      case "Orders": //Leveringen
+      case "SuppliersOrders":
+        return (
+          <>
+            <h2 style={{ margin: 0 }}>{order.supplier}</h2>
+            <h2 style={{ margin: 0 }}> {order.note}</h2>
+            <h2 style={{ margin: 0 }}>
+              {"Afleverdatum: " + order.delivery_date}
+            </h2>
+            <h2 style={{ margin: 0 }}>
+              {"Order status: " + order.order_status}
+            </h2>
+            {!loading && <Card body={order.rows} />}
+          </>
+        );
+      case "Pickup": //TODO: kieken
+        return (
+          <>
+            <h2 style={{ margin: 0 }}>{order.customer}</h2>
+            <h2 style={{ margin: 0 }}>
+              {" "}
+              {"Bedrag: " + formatPrice(order.amount)}
+            </h2>
+            <h2 style={{ margin: 0 }}>
+              {"Afleverdatum: " + order.delivery_date}
+            </h2>
+            {!loading && <Card body={order.rows} />}
+            <br />
+            <div align="center">
+              <Link to="/sign-order" style={{ textDecoration: "none" }}>
+                <Button color="primary" variant="contained">
+                  {"Order afmelden"}
+                </Button>
+              </Link>
+            </div>
+          </>
+        );
+      case "HubOrders": //Bestellingen
+        return (
+          <>
+            <div className="HeaderTopTextWrapper">
+              <div>
+                <h2 style={{ margin: 0 }}>{order.customer}</h2>
+                <h3 style={{ margin: 0 }}>
+                  {"Bedrag: " + formatPrice(order.amount)}
+                </h3>
+                <h3 style={{ margin: 0 }}>
+                  {"Afleverdatum: " + order.delivery_date}
+                </h3>
+              </div>
+
+              <img
+                style={{ marginLeft: 20 }}
+                src={props.logo}
+                alt="Logo"
+                className="HeaderLogo"
+              />
+            </div>
+            <br />
+            {!loading && <Card body={order.rows} />}
+          </>
+        );
+      case "HubOrdersSuppliers": //Te ontvangen
+        return (
+          <>
+            <h3 style={{ margin: 0 }}>{"Afhaalpunt: " + props.pickupPoint}</h3>
+            <h3 style={{ margin: 0 }}>
+              {"Afleverdatum: " + props.deliveryDate}
+            </h3>
+            {!loading && <Card body={order} />}
+          </>
+        );
+      default:
+        return <>{!loading && <Table body={order} header={header} />}</>;
+    }
+  } else {
+    return <Redirect to="/scanner" />;
   }
 }
 
@@ -158,7 +189,9 @@ function mapStateToProps(state) {
     currentType: state.general.currentType,
     orderId: state.order.orderId,
     deliveryDate: state.order.deliveryDate,
+    pickupPoint: state.order.pickuppoint,
     hubId: state.order.hubId,
+    logo: state.login.login_data.logo,
   };
 }
 

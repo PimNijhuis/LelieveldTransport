@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { loginAPI } from "../services/login/actions";
+import { loginAPI, loginWithKey } from "../services/login/actions";
 import "../styles/LoginForm.scss";
 import { Redirect } from "react-router-dom";
 import logo from "../goeei.png";
+import logoBeukk from "../Beukk.png";
 
 function Login(props) {
   const [username, setUsername] = useState("");
@@ -13,16 +14,23 @@ function Login(props) {
     event.preventDefault();
     props.loginAPI(username, password);
   };
+
+  const urlToken = new URLSearchParams(window.location.search).get("key");
+  console.log(urlToken);
+
   if (props.userId) {
-    return <Redirect to="/menu" />;
+    return <Redirect to="/action-menu" />;
+  } else if (urlToken) {
+    props.loginWithKey(urlToken);
+    return "";
   } else {
     return (
       <div className="LoginFormWrapper">
         <div className="LoginFormBackground"></div>
         <div className="LoginForm fadeIn">
-          <img src={logo} alt="Logo" className="LoginFormLogo" />
+          <img src={logoBeukk} alt="Logo" className="LoginFormLogo" />
           <form onSubmit={handleSubmit}>
-            <p>Welkom bij Goei Eete!</p>
+            <p>Welkom bij BEUKK!</p>
             <input
               className="LoginFormInput"
               placeholder="Gebruikersnaam"
@@ -53,4 +61,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   loginAPI,
+  loginWithKey,
 })(Login);
