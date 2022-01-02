@@ -16,6 +16,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Divider } from "@material-ui/core";
 
+import logoInslag from "../inslag.PNG"
+import logoUitslag from "../uitslag.PNG"
+
 export default function ActionMenu(props) {
   const [open, setOpen] = React.useState(false);
 
@@ -70,7 +73,11 @@ export default function ActionMenu(props) {
               margin: "30px 10px 10px",
             }}
           >
-            {"Inslag <add icon>"}
+            <div>
+              {"Inslag"}
+              <br />
+              <img src={logoInslag} alt="LogoInslag" width="150" height="100"/>
+            </div>
           </Button>
         </Link>
         <Link to={"/scanner"} style={{ textDecoration: "none" }}>
@@ -83,7 +90,11 @@ export default function ActionMenu(props) {
               margin: "30px 10px 10px",
             }}
           >
-            {"Uitslag <add icon>"}
+            <div>
+              {"Uitslag"}
+              <br />
+              <img src={logoUitslag} alt="LogoUitslag" width="150" height="100"/>
+            </div>
           </Button>
         </Link>
       </div>
