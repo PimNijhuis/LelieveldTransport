@@ -1,0 +1,47 @@
+.HeaderWrapper {
+  margin-bottom: 32px;
+  padding: 32px;
+  color: #333333;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 16px 100px rgba(0, 0, 0, 0.2);
+}
+
+.HeaderTopTextWrapper {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.HeaderLogo {
+  display: inline-block;
+  height: 100%;
+  margin: auto 0;
+}
+
+.HeaderText {
+  display: inline-block;
+  margin: 0;
+  margin-left: 16px;
+  margin-right: auto;
+  font-size: 1.4rem;
+}
+
+.locationDropdown {
+  margin-top: 20px;
+}
+
+.react-datepicker__input-container input {
+  text-align: center;
+  border: 2px solid #696969;
+  background-color: #ffffff;
+  padding: 4px;
+  border-radius: 4px;
+}
+.datePicker {
+  text-align: center;
+}
+
+.react-datepicker__tab-loop {
+  display: inline-block;
+}
