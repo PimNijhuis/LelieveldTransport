@@ -4,11 +4,7 @@ import axios from "axios";
 
 import Login from "./screens/LoginView";
 import Tasks from "./screens/TasksView";
-import Menu from "./screens/MenuView";
-import ResponseList from "./screens/ResponseListView";
-import Order from "./screens/SingleOrderView";
 import Scanner from "./screens/ScannerView";
-import SignOrder from "./screens/SignView";
 import ActionMenu from "./screens/ActionMenuView";
 import requireAuth from "./utils/requireAuth";
 //Set Axios Defaults
@@ -40,11 +36,7 @@ export default function App({ history }) {
       </Route>
       <Route path="/login" component={Login} />
       <Route path="/tasks" component={requireAuth(Tasks)} />
-      <Route path="/menu" component={requireAuth(Menu)} />
-      <Route path="/response-list" component={requireAuth(ResponseList)} />
-      <Route path="/order" component={requireAuth(Order)} />
       <Route path="/scanner" component={requireAuth(Scanner)} />
-      <Route path="/sign-order" component={requireAuth(SignOrder)} />
       <Route path="/action-menu" component={requireAuth(ActionMenu)} />
     </HashRouter>
   );

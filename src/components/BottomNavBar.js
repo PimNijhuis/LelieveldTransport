@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import MenuIcon from "@material-ui/icons/Menu";
-import ProfileIcon from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
 import "../styles/BottomNavBar.scss";
 import CropFreeIcon from "@material-ui/icons/CropFree";
@@ -8,9 +7,9 @@ import { updateCurrentType } from "../services/general/actions";
 import { connect } from "react-redux";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 
-function BottomNavBar(props) {
+export default function BottomNavBar(props) {
   return (
-    <div className="BottomNavBarWrapper">
+    <div className="BottomNavBarWrapper fadeInDelayed">
       <ul className="BottomNavBar">
         <Link to="/action-menu" style={{ textDecoration: "none" }}>
           <li>
@@ -31,13 +30,3 @@ function BottomNavBar(props) {
     </div>
   );
 }
-
-function mapStateToProps(state) {
-  return {
-    hub: state.login.login_data.hub,
-  };
-}
-
-export default connect(mapStateToProps, {
-  updateCurrentType,
-})(BottomNavBar);

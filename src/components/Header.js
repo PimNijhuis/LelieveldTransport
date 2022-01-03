@@ -1,54 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import "../styles/Header.scss";
-import DatePicker from "./DatePicker";
-import BackButton from "../components/BackButton";
-import lelieveld from "../assets/lelieveld.png"
+import lelieveld from "../assets/lelieveld.png";
 
 function Header(props) {
-  const needsDatePicker = () => {
-    if (props.needsDatePicker === "Yes") {
-      return (
-        <>
-          <br />
-          <div className="datePicker">
-            <DatePicker />
-          </div>
-          <br />
-        </>
-      );
-    }
-  };
-
-  const needsBackButton = () => {
-    switch (props.title) {
-      // case "Bestellingen":
-      // case "Te ontvangen":
-      // case "Te ontvangen (Producten)":
-      // case "Leveringen":
-      // case "Leveringen (Producten)":
-      case "Inhoud Order":
-        return (
-          <div className={"HeaderBackButtonWrapper"}>
-            <BackButton />
-          </div>
-        );
-
-      default:
-        break;
-    }
-  };
-
   return (
     <div>
-      <header className="HeaderWrapper fadeIn">
+      <header className="HeaderWrapper fadeInDelayed">
         <div className="HeaderTopTextWrapper">
           <img src={lelieveld} alt="Logo" className="HeaderLogo" />
           <h1 className="HeaderText">{props.title}</h1>
         </div>
-
-        {needsDatePicker()}
-        {needsBackButton()}
       </header>
     </div>
   );

@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ScannerView(props) {
-  console.dir(props.type)
   const classes = useStyles();
+
   return (
-    <div >
+    <div className="pageWrapper">
       <Header title={props.title} />
-      <div className={classes.scanner}>
+      <div className={(classes.scanner, "fadeInDelayed")}>
         <Scanner />
       </div>
       <BottomNavBar />
@@ -41,5 +41,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {
-})(ScannerView);
+export default connect(mapStateToProps, {})(ScannerView);
