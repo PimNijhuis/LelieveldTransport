@@ -5,6 +5,7 @@ import Scanner from "../components/Scanner";
 // import Background from "./food_background.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 import ScannerOverlay from "./scanner.svg";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   scanner: {
@@ -19,11 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ScannerView() {
+function ScannerView(props) {
+  console.dir(props.type)
   const classes = useStyles();
   return (
     <div className={"pageWrapper"}>
-      <Header title="Afmelden Pick-Up" />
+      <Header title={props.title} />
       <div className={classes.scanner}>
         <Scanner />
       </div>
@@ -31,3 +33,13 @@ export default function ScannerView() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    type: state.currentTaskType.type,
+    title: state.currentTaskType.title,
+  };
+}
+
+export default connect(mapStateToProps, {
+})(ScannerView);

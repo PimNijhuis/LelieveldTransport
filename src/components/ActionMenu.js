@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import "../styles/Header.scss";
 import "../styles/ActionMenu.scss";
 import Button from "@material-ui/core/Button";
@@ -20,7 +21,9 @@ import logoInslag from "../inslag.PNG";
 import logoUitslag from "../uitslag.PNG";
 import lelieveld from "../lelieveld.png";
 
-export default function ActionMenu(props) {
+import { updateCurrentTaskType } from "../services/currentTaskType/actions";
+
+function ActionMenu(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -89,6 +92,7 @@ export default function ActionMenu(props) {
               margin: "40px 0px 40px",
               justifyContent: "space-between",
             }}
+            onClick = {() => props.updateCurrentTaskType("inslagAanmelden","Pallet Aanmelden Inslag")}
           >
             <div>
               <img
@@ -114,6 +118,7 @@ export default function ActionMenu(props) {
               margin: "40px 0px 40px",
               justifyContent: "space-evenly",
             }}
+            onClick = {() => props.updateCurrentTaskType("uitslagAanmelden","Pallet Aanmelden Uitslag")}
           >
             <h3 style={{ textTransform: "none" }}>{"Uitslag"}</h3>
             <div>
@@ -167,3 +172,13 @@ export default function ActionMenu(props) {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    userId: state.login.login_data.user_id,
+  };
+}
+
+export default connect(mapStateToProps,{
+  updateCurrentTaskType
+})(ActionMenu);

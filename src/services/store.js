@@ -25,6 +25,7 @@ const store = (initialState) => {
       hub: state.hub,
       suppliers: state.suppliers,
       order: state.order,
+      currentTaskType: state.currentTaskType
     };
     // console.log(persist.orderHistory.order_id)
     // console.log(persist.assortiment);

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import "../styles/Header.scss";
 import DatePicker from "./DatePicker";
 import BackButton from "../components/BackButton";
+import lelieveld from "../lelieveld.png"
 
 function Header(props) {
   const needsDatePicker = () => {
@@ -42,7 +43,7 @@ function Header(props) {
     <div>
       <header className="HeaderWrapper fadeIn">
         <div className="HeaderTopTextWrapper">
-          <img src={props.logo} alt="Logo" className="HeaderLogo" />
+          <img src={lelieveld} alt="Logo" className="HeaderLogo" />
           <h1 className="HeaderText">{props.title}</h1>
         </div>
 

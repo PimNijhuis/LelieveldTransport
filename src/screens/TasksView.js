@@ -5,8 +5,8 @@ import Tasks from "../components/Tasks";
 
 export default function ProfileView() {
   return (
-    <div className="pageWrapper">
-      <Header title="Taken" />
+    <div className={"pageWrapper"}>
+      <Header title="Huidige taak" />
       <div className="contentWrapper fadeInDelayed">
         <Tasks />
       </div>
