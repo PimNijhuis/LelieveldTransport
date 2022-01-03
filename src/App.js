@@ -9,7 +9,7 @@ import ResponseList from "./screens/ResponseListView";
 import Order from "./screens/SingleOrderView";
 import Scanner from "./screens/ScannerView";
 import SignOrder from "./screens/SignView";
-import ActionMenu from "./components/ActionMenu";
+import ActionMenu from "./screens/ActionMenuView";
 import requireAuth from "./utils/requireAuth";
 //Set Axios Defaults
 axios.defaults.baseURL = "https://goeieete.suppliershub.eu/api/";

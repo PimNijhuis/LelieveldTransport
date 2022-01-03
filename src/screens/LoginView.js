@@ -1,18 +1,18 @@
 import React from "react";
 import LoginForm from "../components/LoginForm";
 import { makeStyles } from "@material-ui/core/styles";
-// import Background from "./food_background.jpg";
+import Background from "../assets/backgroundlelieveldeditted.jpeg";
 
 const useStyles = makeStyles((theme) => ({
   loginView: {
-    // backgroundImage: `url(${Background})`,
+    backgroundImage: `url(${Background})`,
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     display: "flex",
+    backgroundAttachment: 'fixed',
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
     height: "100%",
   },
 }));
@@ -20,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginView() {
   const classes = useStyles();
   return (
-    <div className={("pageWrapper", classes.loginView)}>
+    <div className={classes.loginView}>
       <LoginForm />
     </div>
   );
 }
+

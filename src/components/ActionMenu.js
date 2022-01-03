@@ -17,9 +17,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Divider } from "@material-ui/core";
 
-import logoInslag from "../inslag.PNG";
-import logoUitslag from "../uitslag.PNG";
-import lelieveld from "../lelieveld.png";
+import logoInslag from "../assets/inslag.PNG";
+import logoUitslag from "../assets/uitslag.PNG";
+import lelieveld from "../assets/lelieveld.png";
 
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 
@@ -56,22 +56,7 @@ function ActionMenu(props) {
   };
 
   return (
-    <div className="HeaderWrapper">
-      <div className="HeaderTopTextWrapper">
-        <img
-          src={lelieveld}
-          alt="LogoLelie"
-          width="80"
-          height="50"
-          style={{ padding: "10px 10px 0px" }}
-        />
-
-        <h2
-          style={{ textAlign: "center", width: "100%", position: "absolute" }}
-        >
-          Lelieveld Transport
-        </h2>
-      </div>
+    <div>
       <div
         style={{
           display: "flex",
@@ -79,7 +64,7 @@ function ActionMenu(props) {
           alignItems: "center",
           justifyContent: "space-evenly",
           margin: "50px 0px 50px 0px",
-          height: "500px",
+          // height: "300px",
         }}
       >
         <Link to={"/scanner"} style={{ textDecoration: "none" }}>
@@ -88,8 +73,8 @@ function ActionMenu(props) {
             variant="contained"
             style={{
               minWidth: "300px",
-              minHeight: "100px",
-              margin: "40px 0px 40px",
+              minHeight: "150px",
+              margin: "40px 0px 0px",
               justifyContent: "space-between",
             }}
             onClick = {() => props.updateCurrentTaskType("inslagAanmelden","Pallet Aanmelden Inslag")}
@@ -114,8 +99,8 @@ function ActionMenu(props) {
             variant="contained"
             style={{
               minWidth: "300px",
-              minHeight: "100px",
-              margin: "40px 0px 40px",
+              minHeight: "150px",
+              margin: "40px 0px 0px",
               justifyContent: "space-evenly",
             }}
             onClick = {() => props.updateCurrentTaskType("uitslagAanmelden","Pallet Aanmelden Uitslag")}
@@ -135,7 +120,7 @@ function ActionMenu(props) {
 
       <center
         style={{
-          height: "100px",
+          // height: "50px",
           bottom: "0%",
           // marginTop: "210px",
         }}

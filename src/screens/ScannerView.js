@@ -4,7 +4,7 @@ import BottomNavBar from "../components/BottomNavBar";
 import Scanner from "../components/Scanner";
 // import Background from "./food_background.jpg";
 import { makeStyles } from "@material-ui/core/styles";
-import ScannerOverlay from "./scanner.svg";
+import ScannerOverlay from "../assets/scanner.svg";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,7 @@ function ScannerView(props) {
   console.dir(props.type)
   const classes = useStyles();
   return (
-    <div className={"pageWrapper"}>
+    <div >
       <Header title={props.title} />
       <div className={classes.scanner}>
         <Scanner />

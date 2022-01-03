@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "../styles/Header.scss";
 import DatePicker from "./DatePicker";
 import BackButton from "../components/BackButton";
-import lelieveld from "../lelieveld.png"
+import lelieveld from "../assets/lelieveld.png"
 
 function Header(props) {
   const needsDatePicker = () => {

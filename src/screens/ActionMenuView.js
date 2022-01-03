@@ -1,16 +1,15 @@
 import React from "react";
 import Header from "../components/Header";
 import BottomNavBar from "../components/BottomNavBar";
-import Tasks from "../components/Tasks";
+import ActionMenu from "../components/ActionMenu";
 
-export default function ProfileView() {
+export default function ActionMenuView() {
   return (
-    <div>
-      <Header title="Huidige taak" />
+    <div className='pageWrapper'>
+      <Header title="Lelieveld Transport" />
       <div className="contentWrapper fadeInDelayed">
-        <Tasks />
+        <ActionMenu />
       </div>
-      <BottomNavBar />
     </div>
   );
 }

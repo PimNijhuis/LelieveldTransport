@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { loginAPI, loginWithKey } from "../services/login/actions";
 import "../styles/LoginForm.scss";
 import { Redirect } from "react-router-dom";
-import logo from "../goeei.png";
-import logoBeukk from "../Beukk.png";
+import logoLelieveld from "../assets/lelieveld.png";
 
 function Login(props) {
   const [username, setUsername] = useState("");
@@ -28,9 +27,9 @@ function Login(props) {
       <div className="LoginFormWrapper">
         <div className="LoginFormBackground"></div>
         <div className="LoginForm fadeIn">
-          <img src={logoBeukk} alt="Logo" className="LoginFormLogo" />
+          <img src={logoLelieveld} alt="Logo" className="LoginFormLogo" />
           <form onSubmit={handleSubmit}>
-            <p>Welkom bij BEUKK!</p>
+            <p>Welkom bij Lelieveld Transport!</p>
             <input
               className="LoginFormInput"
               placeholder="Gebruikersnaam"

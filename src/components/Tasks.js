@@ -11,7 +11,7 @@ import "../styles/ActionMenu.scss";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 
-import forklift from "../forklift.png"
+import forklift from "../assets/forklift.png"
 
 
 function TasksList(props) {
@@ -22,10 +22,12 @@ function TasksList(props) {
       <h1>Stelling: 3</h1>
       <h1>Rij: 5</h1>
       <h1>Etage: 8 </h1>
-
+      
+      <div>
+        
       <img
           src={forklift}
-          alt="LogoLelie"
+          alt="LogoForkLift"
           width="80"
           height="50"
           style={{ padding: "10px 10px 0px" }}
@@ -44,8 +46,8 @@ function TasksList(props) {
           height="50"
           style={{ padding: "10px 10px 0px" }}
         />
-
-      <Link to={"/scanner"} style={{ textDecoration: "none" }}>
+      </div>
+      <Link to={"/scanner"} style={{ textDecoration: "none" }} >
           <Button
             color="primary"
             variant="contained"
@@ -55,7 +57,7 @@ function TasksList(props) {
               margin: "40px 0px 40px",
               justifyContent: "space-evenly",
             }}
-            onClick = {() => props.updateCurrentTaskType("InslagAfmelden","Pallet Afmelden Pallet")}
+            onClick = {() => props.updateCurrentTaskType("InslagAfmelden","Pallet Afmelden Inslag")}
           >
             <h3 style={{ textTransform: "none" }}>{"Afmelden"}</h3>
           
