@@ -16,21 +16,26 @@ export const loginAPI = (username, password) => (dispatch) => {
       } else {
         // Set Login Data
         const loginData = {
-          token: response.data.token,
-          user_id: response.data.user_id,
           firstName: response.data.firstname,
           lastName: response.data.lastname,
-          company: response.data.company,
-          authorization: response.data.authorization,
-          city: response.data.city,
-          logo: "https://goeieete.suppliershub.eu" + response.data.logo,
-          mainHub: response.data.main_hub,
+          address: response.data.address,
+          user_id: response.data.user_id,
+
           hub: response.data.hub,
+          mainHub: response.data.main_hub,
           supplier: response.data.supplier,
+
+          authorization: response.data.authorization,
+          token: response.data.token,
+
+          company: response.data.company,
+          city: response.data.city,
           zipcode: response.data.zipcode,
-          association: response.data.association,
-          associationId: response.data.association_id,
+          logo: "https://lelieveld.suppliershub.eu" + response.data.logo,
+          latitude: response.data.latitude,
+          longitude: response.data.longitude,
         };
+
         //setDefaultToken and authorization
         axios.defaults.headers.common["Token"] = loginData.token;
         axios.defaults.headers.common["Authorization"] =
@@ -38,9 +43,7 @@ export const loginAPI = (username, password) => (dispatch) => {
 
         // Dispatch Login Data
         dispatch({ type: LOGIN, payload: loginData });
-        console.log(loginData);
         console.log("displatched baby");
-        //TODO: or hub; write function
       }
     })
     .catch((err) => {
@@ -51,11 +54,10 @@ export const loginAPI = (username, password) => (dispatch) => {
 };
 
 export const loginWithKey = (querystringKey) => (dispatch) => {
-  // console.log("started function to login");
   const requestData = {
     key: querystringKey,
   };
-  // console.log("defined request Data");
+
   axios
     .post("/login", requestData)
     .then((response) => {
@@ -65,20 +67,24 @@ export const loginWithKey = (querystringKey) => (dispatch) => {
       } else {
         // Set Login Data
         const loginData = {
-          token: response.data.token,
-          user_id: response.data.user_id,
           firstName: response.data.firstname,
           lastName: response.data.lastname,
-          company: response.data.company,
-          authorization: response.data.authorization,
-          city: response.data.city,
-          logo: "https://goeieete.suppliershub.eu" + response.data.logo,
-          mainHub: response.data.main_hub,
+          address: response.data.address,
+          user_id: response.data.user_id,
+
           hub: response.data.hub,
+          mainHub: response.data.main_hub,
           supplier: response.data.supplier,
+
+          authorization: response.data.authorization,
+          token: response.data.token,
+
+          company: response.data.company,
+          city: response.data.city,
           zipcode: response.data.zipcode,
-          association: response.data.association,
-          associationId: response.data.association_id,
+          logo: "https://lelieveld.suppliershub.eu" + response.data.logo,
+          latitude: response.data.latitude,
+          longitude: response.data.longitude,
         };
         //setDefaultToken and authorization
         axios.defaults.headers.common["Token"] = loginData.token;
@@ -87,14 +93,12 @@ export const loginWithKey = (querystringKey) => (dispatch) => {
 
         // Dispatch Login Data
         dispatch({ type: LOGIN, payload: loginData });
-        console.log(loginData);
         console.log("displatched baby");
-        //TODO: or hub; write function
       }
     })
     .catch((err) => {
       console.log(
-        "[login.actions.js] loginAPI || Could not fetch login. Try again later."
+        "[login.actions.js] loginWithKey || Could not fetch login. Try again later."
       );
     });
 };

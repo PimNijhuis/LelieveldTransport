@@ -21,14 +21,10 @@ const store = (initialState) => {
     const state = store.getState();
     const persist = {
       login: state.login,
-      general: state.general,
-      hub: state.hub,
-      suppliers: state.suppliers,
-      order: state.order,
-      currentTaskType: state.currentTaskType
+      currentTaskType: state.currentTaskType,
+      scanner: state.scanner,
     };
-    // console.log(persist.orderHistory.order_id)
-    // console.log(persist.assortiment);
+
     window.localStorage.setItem("state", JSON.stringify(persist));
   });
 

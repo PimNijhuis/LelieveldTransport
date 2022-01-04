@@ -8,11 +8,10 @@ import Scanner from "./screens/ScannerView";
 import ActionMenu from "./screens/ActionMenuView";
 import requireAuth from "./utils/requireAuth";
 //Set Axios Defaults
-axios.defaults.baseURL = "https://goeieete.suppliershub.eu/api/";
+axios.defaults.baseURL = "https://lelieveld.suppliershub.eu/wmsapi/";
 
-//moet anders
-axios.defaults.headers.common["Authorization"] =
-  "5ff3d38f-fdd1-448a-9370-0112d84c8b00";
+// axios.defaults.headers.common["Authorization"] =
+//   "5ff3d38f-fdd1-448a-9370-0112d84c8b00";
 // axios.defaults.headers.common["Token"] = "4b3b596e-1b5b-4026-9051-eb752f818d98";
 //axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3000';
 axios.defaults.headers.common["Content-Type"] = "application/json";

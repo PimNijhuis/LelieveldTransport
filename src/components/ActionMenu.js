@@ -19,7 +19,6 @@ import { Divider } from "@material-ui/core";
 
 import logoInslag from "../assets/inslag.PNG";
 import logoUitslag from "../assets/uitslag.PNG";
-import lelieveld from "../assets/lelieveld.png";
 
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 
@@ -40,9 +39,7 @@ function ActionMenu(props) {
   };
 
   const logout = () => {
-    // TODO: uitloggen zorgt niet dat je terug gaat naar login
     let params = new URLSearchParams(window.location.search);
-    console.log(params);
 
     //als wel key
     if (params.get("key")) {
@@ -77,7 +74,12 @@ function ActionMenu(props) {
               margin: "40px 0px 0px",
               justifyContent: "space-between",
             }}
-            onClick = {() => props.updateCurrentTaskType("inslagAanmelden","Pallet Aanmelden Inslag")}
+            onClick={() =>
+              props.updateCurrentTaskType(
+                "inslag_aanmelden",
+                "Pallet Aanmelden Inslag"
+              )
+            }
           >
             <div>
               <img
@@ -103,7 +105,12 @@ function ActionMenu(props) {
               margin: "40px 0px 0px",
               justifyContent: "space-evenly",
             }}
-            onClick = {() => props.updateCurrentTaskType("uitslagAanmelden","Pallet Aanmelden Uitslag")}
+            onClick={() =>
+              props.updateCurrentTaskType(
+                "uitslagAanmelden",
+                "Pallet Aanmelden Uitslag"
+              )
+            }
           >
             <h3 style={{ textTransform: "none" }}>{"Uitslag"}</h3>
             <div>
@@ -120,9 +127,7 @@ function ActionMenu(props) {
 
       <center
         style={{
-          // height: "50px",
           bottom: "0%",
-          // marginTop: "210px",
         }}
       >
         <Divider />
@@ -164,6 +169,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps,{
-  updateCurrentTaskType
+export default connect(mapStateToProps, {
+  updateCurrentTaskType,
 })(ActionMenu);

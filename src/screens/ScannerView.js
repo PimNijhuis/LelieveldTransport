@@ -2,9 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import BottomNavBar from "../components/BottomNavBar";
 import Scanner from "../components/Scanner";
-// import Background from "./food_background.jpg";
 import { makeStyles } from "@material-ui/core/styles";
-import ScannerOverlay from "../assets/scanner.svg";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +25,7 @@ function ScannerView(props) {
     <div className="pageWrapper">
       <Header title={props.title} />
       <div className={(classes.scanner, "fadeInDelayed")}>
-        <Scanner />
+        <Scanner type={props.type} />
       </div>
       <BottomNavBar />
     </div>
