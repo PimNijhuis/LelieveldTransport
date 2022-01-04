@@ -1,42 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import QrReader from "modern-react-qr-reader";
-import { Redirect } from "react-router-dom";
-import { setOrderId } from "../services/order/actions";
-import { updateCurrentType } from "../services/general/actions";
+import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 import { connect } from "react-redux";
-import axios from "axios";
+import {
+  inslagAanmeldenAPI,
+  inslagAfmeldenAPI,
+} from "../services/scanner/actions";
 
 function ScannerComponent(props) {
-  // const classes = useStyles();
-  const [hubOrderId, setHubOrderId] = useState("");
+  const type = props.type;
 
-  const validateHubOrder = (data) => {
-    const requestData = {
-      id: data,
-    };
-    axios
-      .post("/fetch_order_by_qrcode", requestData)
-      .then((response) => {
-        if (response.data.code === 500) {
-          alert("Deze order is niet beschikbaar");
-          return;
-        } else {
-          setHubOrderId(data);
-          props.setOrderId(data);
-          props.updateCurrentType("Pickup");
-          return;
-        }
-      })
-      .catch((err) => {
-        console.log(
-          "[order.actions.js] confirmOrder || Could not confirm order. Try again later."
-        );
-      });
+  const fetchLabel = (label) => {
+    console.log(label);
+    switch (type) {
+      case "inslag_aanmelden":
+        props.inslagAanmeldenAPI(label);
+        break;
+      case "inslag_afmelden":
+        props.inslagAfmeldenAPI(label, props.item_info.label);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleScan = (data) => {
     if (data) {
-      validateHubOrder(data);
+      fetchLabel(data);
     }
   };
 
@@ -44,28 +34,17 @@ function ScannerComponent(props) {
     console.error(err);
   };
 
-  if (hubOrderId) {
-    props.setOrderId(hubOrderId);
-    props.updateCurrentType("Pickup");
-    return <Redirect to="/order" />;
-  } else {
-    return (
-      <>
-        <p>{hubOrderId}</p>
-        <QrReader onError={handleError} onScan={handleScan} />
-      </>
-    );
-  }
+  return <QrReader onError={handleError} onScan={handleScan} />;
 }
 
 function mapStateToProps(state) {
   return {
-    currentType: state.general.currentType,
-    orderId: state.order.orderId,
+    item_info: state.scanner.item_info,
   };
 }
 
 export default connect(mapStateToProps, {
-  updateCurrentType,
-  setOrderId,
+  updateCurrentTaskType,
+  inslagAanmeldenAPI,
+  inslagAfmeldenAPI,
 })(ScannerComponent);

@@ -1,7 +1,7 @@
 import { LOGIN } from "./actionTypes";
 
 const initialState = {
-  login_data: [], // Jeroen had dit veranderd naar {}. Dit kan denk ik ook maar wilde uitgebreid testen of dit wel werkt.
+  login_data: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -12,7 +12,6 @@ export default function reducer(state = initialState, action) {
         login_data: action.payload,
       };
     default:
-      // console.log("default reducer");
       return {
         ...state,
       };

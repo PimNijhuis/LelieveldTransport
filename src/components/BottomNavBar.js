@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import "../styles/BottomNavBar.scss";
 import CropFreeIcon from "@material-ui/icons/CropFree";
-import { updateCurrentType } from "../services/general/actions";
-import { connect } from "react-redux";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 
 export default function BottomNavBar(props) {

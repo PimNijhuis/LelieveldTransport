@@ -15,7 +15,6 @@ function Login(props) {
   };
 
   const urlToken = new URLSearchParams(window.location.search).get("key");
-  console.log(urlToken);
 
   if (props.userId) {
     return <Redirect to="/action-menu" />;
@@ -44,7 +43,12 @@ function Login(props) {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <input className="LoginFormSubmit" type="submit" value="Inloggen" />
+            <input
+              className="LoginFormSubmit"
+              type="submit"
+              color="primary"
+              value="Inloggen"
+            />
           </form>
         </div>
       </div>
