@@ -1,6 +1,6 @@
 .BottomNavBarWrapper {
   background-color: #ffffff;
-  position: absolute; // TODO: niet getest wat er gebeurd als er meer op de pagina staat; anders dit terug zetten naar 'fixed'
+  position: fixed; // TODO: niet getest wat er gebeurd als er meer op de pagina staat; anders dit terug zetten naar 'fixed'
   left: 0;
   bottom: 0px;
   width: 100%;

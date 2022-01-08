@@ -1,7 +1,14 @@
-import { INSLAG_AANMELDEN, INSLAG_CHECK } from "./actionTypes";
+import {
+  INSLAG_AANMELDEN,
+  INSLAG_CHECK,
+  UITSLAG_AANMELDEN_INFO,
+  UITSLAG_AANMELDEN_ROWS,
+} from "./actionTypes";
 
 const initialState = {
   item_info: [],
+  pakbon_info: [],
+  pakbon_rijen: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -15,6 +22,16 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         item_info: action.payload,
+      };
+    case UITSLAG_AANMELDEN_INFO:
+      return {
+        ...state,
+        pakbon_info: action.payload,
+      };
+    case UITSLAG_AANMELDEN_ROWS:
+      return {
+        ...state,
+        pakbon_rijen: action.payload,
       };
     default:
       return {
