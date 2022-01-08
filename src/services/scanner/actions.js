@@ -91,7 +91,7 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
 
         // Dispatch data
         dispatch({ type: UITSLAG_AANMELDEN_INFO, payload: itemData });
-        window.location.href = window.location.origin + "/#/tasks";
+        //window.location.href = window.location.origin + "/#/tasks";
       }
     })
     .catch((err) => {
@@ -118,7 +118,7 @@ export const uitslagAanmeldenRowsAPI = (qr_string) => (dispatch) => {
         const itemData = {
           rows: response.data,
         };
-
+        console.dir(itemData);
         // Dispatch data
         dispatch({ type: UITSLAG_AANMELDEN_ROWS, payload: itemData });
         window.location.href = window.location.origin + "/#/tasks";
@@ -127,7 +127,7 @@ export const uitslagAanmeldenRowsAPI = (qr_string) => (dispatch) => {
     .catch((err) => {
       alert("Deze Plaats-QR code is niet bekend");
       console.log(
-        "[scanner.actions.js] uiitslagAanmeldenRowsAPI || Could not fetch item data. Try again later."
+        "[scanner.actions.js] uitslagAanmeldenRowsAPI || Could not fetch item data. Try again later."
       );
     });
 };

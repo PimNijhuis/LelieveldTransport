@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
+import { SingleTask } from "./SingleTask";
 import "../styles/ActionMenu.scss";
 import {
   Button,
@@ -12,14 +13,12 @@ import {
   Divider,
 } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
-import DraftsIcon from "@material-ui/icons/Drafts";
-
 import { Link } from "react-router-dom";
 import forklift from "../assets/forklift.png";
 import idle from "../assets/idle.jpg";
 
 function WhichTasksScreen(props) {
-  console.dir("type:", props.type);
+  console.log("type:", props.type);
   switch (props.type) {
     case "inslag_aanmelden":
     case "inslag_afmelden":
@@ -116,6 +115,7 @@ function TasksUitslag(props) {
     console.log("er is geklikt");
     setHover("lightgrey");
   };
+
   if (props.pakbon_rijen.length === 0) {
     return (
       <div>
@@ -134,13 +134,18 @@ function TasksUitslag(props) {
       </div>
     );
   } else {
+    console.dir(props.pakbon_rijen.rows);
     return (
       <List
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
+          <ListSubheader
+            component="div"
+            id="nested-list-subheader"
+            style={{ textAlign: "center", backgroundColor: "white" }}
+          >
             <h2 style={{ color: "black", marginBottom: "0px" }}>
               {props.pakbon_info.customer}
             </h2>
@@ -148,38 +153,20 @@ function TasksUitslag(props) {
               {"Aantal items: "}
               {props.pakbon_info.items}
             </h3>
+            <Divider />
           </ListSubheader>
         }
       >
-        {props.pakbon_rijen.map((rowData) => (
+        {props.pakbon_rijen.rows.map((rowData) => (
           <div>
-            <ListItem
-              onClick={handleClick}
-              style={{ backgroundColor: `${hover}` }}
-            >
-              <ListItemIcon>
-                <SendIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={rowData.description}
-                secondary={rowData.description}
-              />
+            <ListItem style={{ justifyContent: "center", display: "block" }}>
+              <SingleTask rowData={rowData} />
             </ListItem>
-            <Divider variant="inset" component="li" />
           </div>
         ))}
-        <ListItem onClick={handleClick} style={{ backgroundColor: `${hover}` }}>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Sent mail" secondary="ola" />
-        </ListItem>
-        <ListItem onClick={handleClick}>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </ListItem>
+        <br />
+        <br />
+        <br />
       </List>
     );
   }
