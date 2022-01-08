@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import {
   inslagAanmeldenAPI,
   inslagAfmeldenAPI,
+  uitslagAanmeldenInfoAPI,
+  uitslagAanmeldenRowsAPI,
+  uitslagAfmeldenAPI,
 } from "../services/scanner/actions";
 
 function ScannerComponent(props) {
@@ -19,6 +22,14 @@ function ScannerComponent(props) {
       case "inslag_afmelden":
         props.inslagAfmeldenAPI(label, props.item_info.label);
         break;
+      case "uitslag_aanmelden":
+        props.uitslagAanmeldenInfoAPI(label, props.item_info.label);
+        props.uitslagAanmeldenRowsAPI(label, props.item_info.label);
+        break;
+      case "uitslag_afmelden":
+        props.uitslagAfmeldenAPI(label, props.item_info.label);
+        break;
+
       default:
         break;
     }
@@ -47,4 +58,7 @@ export default connect(mapStateToProps, {
   updateCurrentTaskType,
   inslagAanmeldenAPI,
   inslagAfmeldenAPI,
+  uitslagAanmeldenInfoAPI,
+  uitslagAanmeldenRowsAPI,
+  uitslagAfmeldenAPI,
 })(ScannerComponent);
