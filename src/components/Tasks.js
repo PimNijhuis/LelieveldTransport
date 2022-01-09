@@ -113,7 +113,12 @@ function TasksUitslag(props) {
 
   const handleClick = () => {
     console.log("er is geklikt");
+    props.updateCurrentTaskType(
+      "uitslag_afmelden",
+      "Pallet Ophalen Uitslag"
+    )
     setHover("lightgrey");
+    window.location.href = window.location.origin + "/#/scanner"
   };
 
   if (props.pakbon_rijen.length === 0) {
@@ -135,11 +140,13 @@ function TasksUitslag(props) {
     );
   } else {
     console.dir(props.pakbon_rijen.rows);
+    console.dir(props.pakbon_info);
     return (
       <List
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         component="nav"
         aria-labelledby="nested-list-subheader"
+        onClick={()=> handleClick()}
         subheader={
           <ListSubheader
             component="div"
@@ -149,10 +156,9 @@ function TasksUitslag(props) {
             <h2 style={{ color: "black", marginBottom: "0px" }}>
               {props.pakbon_info.customer}
             </h2>
-            <h3 style={{ marginTop: "0px" }}>
-              {"Aantal items: "}
-              {props.pakbon_info.items}
-            </h3>
+            <h4 style={{ marginTop: "0px" }}>
+              {"Aantal gepicked: "}{props.pakbon_info.picked}/{props.pakbon_info.items} - {"Nog te picken items:"}
+            </h4>
             <Divider />
           </ListSubheader>
         }
