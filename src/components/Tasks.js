@@ -135,6 +135,7 @@ function TasksUitslag(props) {
     );
   } else {
     console.dir(props.pakbon_rijen.rows);
+    console.dir(props.pakbon_info);
     return (
       <List
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -149,10 +150,9 @@ function TasksUitslag(props) {
             <h2 style={{ color: "black", marginBottom: "0px" }}>
               {props.pakbon_info.customer}
             </h2>
-            <h3 style={{ marginTop: "0px" }}>
-              {"Aantal items: "}
-              {props.pakbon_info.items}
-            </h3>
+            <h4 style={{ marginTop: "0px" }}>
+              {"Aantal gepicked: "}{props.pakbon_info.picked}/{props.pakbon_info.items} - {"Nog te picken items:"}
+            </h4>
             <Divider />
           </ListSubheader>
         }

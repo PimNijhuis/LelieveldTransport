@@ -58,6 +58,7 @@ export const inslagAfmeldenAPI = (qr_string, label) => (dispatch) => {
         alert(response.data.message);
         if (response.data.ok) {
           dispatch({ type: INSLAG_CHECK, payload: [] });
+          window.location.href = window.location.origin + "/#/action-menu"
         }
       });
     })
@@ -87,6 +88,9 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
           customer: response.data.customer,
           deliverydate: response.data.deliverydate,
           items: response.data.items,
+          picked: response.data.picked,
+          qr_pakbon: qr_string,
+          ready_for_picking: response.data.ready_for_picking
         };
 
         // Dispatch data
