@@ -3,6 +3,7 @@ import {
   INSLAG_CHECK,
   UITSLAG_AANMELDEN_INFO,
   UITSLAG_AANMELDEN_ROWS,
+  UITSLAG_AFMELDEN
 } from "./actionTypes";
 
 const initialState = {
@@ -29,6 +30,11 @@ export default function reducer(state = initialState, action) {
         pakbon_info: action.payload,
       };
     case UITSLAG_AANMELDEN_ROWS:
+      return {
+        ...state,
+        pakbon_rijen: action.payload,
+      };
+    case UITSLAG_AFMELDEN:
       return {
         ...state,
         pakbon_rijen: action.payload,

@@ -113,7 +113,12 @@ function TasksUitslag(props) {
 
   const handleClick = () => {
     console.log("er is geklikt");
+    props.updateCurrentTaskType(
+      "uitslag_afmelden",
+      "Pallet Ophalen Uitslag"
+    )
     setHover("lightgrey");
+    window.location.href = window.location.origin + "/#/scanner"
   };
 
   if (props.pakbon_rijen.length === 0) {
@@ -141,6 +146,7 @@ function TasksUitslag(props) {
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         component="nav"
         aria-labelledby="nested-list-subheader"
+        onClick={()=> handleClick()}
         subheader={
           <ListSubheader
             component="div"

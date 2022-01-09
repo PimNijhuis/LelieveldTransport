@@ -27,7 +27,7 @@ function ScannerComponent(props) {
         props.uitslagAanmeldenRowsAPI(label, props.item_info.label);
         break;
       case "uitslag_afmelden":
-        props.uitslagAfmeldenAPI(label, props.item_info.label);
+        props.uitslagAfmeldenAPI(props.pakbon_info.qr_pakbon, label);
         break;
 
       default:
@@ -51,6 +51,7 @@ function ScannerComponent(props) {
 function mapStateToProps(state) {
   return {
     item_info: state.scanner.item_info,
+    pakbon_info: state.scanner.pakbon_info,
   };
 }
 
