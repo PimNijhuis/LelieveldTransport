@@ -6,6 +6,7 @@ import Login from "./screens/LoginView";
 import Tasks from "./screens/TasksView";
 import Scanner from "./screens/ScannerView";
 import ActionMenu from "./screens/ActionMenuView";
+import CameraDefect from "./screens/CameraDefectView";
 import requireAuth from "./utils/requireAuth";
 //Set Axios Defaults
 axios.defaults.baseURL = "https://lelieveld.suppliershub.eu/wmsapi/";
@@ -37,6 +38,7 @@ export default function App({ history }) {
       <Route path="/tasks" component={requireAuth(Tasks)} />
       <Route path="/scanner" component={requireAuth(Scanner)} />
       <Route path="/action-menu" component={requireAuth(ActionMenu)} />
+      <Route path="/camera-defect" component={requireAuth(CameraDefect)} />
     </HashRouter>
   );
 }

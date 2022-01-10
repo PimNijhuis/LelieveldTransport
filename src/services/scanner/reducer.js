@@ -3,13 +3,15 @@ import {
   INSLAG_CHECK,
   UITSLAG_AANMELDEN_INFO,
   UITSLAG_AANMELDEN_ROWS,
-  UITSLAG_AFMELDEN
+  UITSLAG_AFMELDEN,
+  DEFECT_OPSLAAN,
 } from "./actionTypes";
 
 const initialState = {
   item_info: [],
   pakbon_info: [],
   pakbon_rijen: [],
+  defect_qr: "",
 };
 
 export default function reducer(state = initialState, action) {
@@ -39,6 +41,14 @@ export default function reducer(state = initialState, action) {
         ...state,
         pakbon_rijen: action.payload,
       };
+<<<<<<< HEAD
+    case DEFECT_OPSLAAN:
+      return {
+        ...state,
+        defect_qr: action.payload,
+      };
+=======
+>>>>>>> main
     default:
       return {
         ...state,

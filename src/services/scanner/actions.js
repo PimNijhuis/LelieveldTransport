@@ -5,7 +5,13 @@ import {
   UITSLAG_AANMELDEN_INFO,
   UITSLAG_AANMELDEN_ROWS,
   UITSLAG_AFMELDEN,
+  DEFECT_OPSLAAN
 } from "./actionTypes";
+
+export const defectOpslaan = (qr_string) => (dispatch) => {
+  dispatch({ type: DEFECT_OPSLAAN, payload: qr_string });
+
+}
 
 export const inslagAanmeldenAPI = (qr_string) => (dispatch) => {
   const requestData = {
