@@ -108,7 +108,7 @@ function ActionMenu(props) {
             onClick={() =>
               props.updateCurrentTaskType(
                 "uitslag_aanmelden",
-                "Pallet Aanmelden Uitslag"
+                "Pakbon Aanmelden Uitslag"
               )
             }
           >

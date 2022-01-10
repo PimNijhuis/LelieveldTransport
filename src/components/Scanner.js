@@ -8,13 +8,24 @@ import {
   uitslagAanmeldenInfoAPI,
   uitslagAanmeldenRowsAPI,
   uitslagAfmeldenAPI,
+  defectOpslaan
 } from "../services/scanner/actions";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { Redirect } from "react-router-dom";
 
 function ScannerComponent(props) {
   const type = props.type;
+  const [scanType, setScanType] = React.useState("Pallet/Plaats Scannen")
 
   const fetchLabel = (label) => {
-    console.log(label);
+    if(scanType === "Probleem melden"){
+      props.defectOpslaan(label)
+      window.location.href = window.location.origin + "/#/camera-defect";
+      return;
+    }
     switch (type) {
       case "inslag_aanmelden":
         props.inslagAanmeldenAPI(label);
@@ -27,9 +38,8 @@ function ScannerComponent(props) {
         props.uitslagAanmeldenRowsAPI(label, props.item_info.label);
         break;
       case "uitslag_afmelden":
-        props.uitslagAfmeldenAPI(label, props.item_info.label);
+        props.uitslagAfmeldenAPI(props.pakbon_info.qr_pakbon, label);
         break;
-
       default:
         break;
     }
@@ -45,12 +55,34 @@ function ScannerComponent(props) {
     console.error(err);
   };
 
-  return <QrReader onError={handleError} onScan={handleScan} />;
+  const handleChange = (event) => {
+    setScanType(event.target.value);
+  };
+
+  return(
+    <div className="contentWrapper" style={{marginTop: '15px'}}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Actie</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={scanType}
+          label="Type"
+          onChange={handleChange}
+        >
+          <MenuItem value={"Pallet/Plaats Scannen"}>Pallet/Plaats Scannen</MenuItem>
+          <MenuItem value={"Probleem melden"}>Probleem melden</MenuItem>
+        </Select>
+      </FormControl>
+      <QrReader onError={handleError} onScan={handleScan} />
+    </div>
+  )
 }
 
 function mapStateToProps(state) {
   return {
     item_info: state.scanner.item_info,
+    pakbon_info: state.scanner.pakbon_info,
   };
 }
 
@@ -61,4 +93,5 @@ export default connect(mapStateToProps, {
   uitslagAanmeldenInfoAPI,
   uitslagAanmeldenRowsAPI,
   uitslagAfmeldenAPI,
+  defectOpslaan
 })(ScannerComponent);
