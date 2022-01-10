@@ -41,11 +41,14 @@ export default function reducer(state = initialState, action) {
         ...state,
         pakbon_rijen: action.payload,
       };
+<<<<<<< HEAD
     case DEFECT_OPSLAAN:
       return {
         ...state,
         defect_qr: action.payload,
       };
+=======
+>>>>>>> main
     default:
       return {
         ...state,
