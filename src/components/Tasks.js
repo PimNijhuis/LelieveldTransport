@@ -8,17 +8,13 @@ import {
   List,
   ListSubheader,
   ListItem,
-  ListItemIcon,
-  ListItemText,
   Divider,
 } from "@material-ui/core";
-import SendIcon from "@material-ui/icons/Send";
 import { Link } from "react-router-dom";
 import forklift from "../assets/forklift.png";
 import idle from "../assets/idle.jpg";
 
 function WhichTasksScreen(props) {
-  console.log("type:", props.type);
   switch (props.type) {
     case "inslag_aanmelden":
     case "inslag_afmelden":
@@ -113,12 +109,9 @@ function TasksUitslag(props) {
 
   const handleClick = () => {
     console.log("er is geklikt");
-    props.updateCurrentTaskType(
-      "uitslag_afmelden",
-      "Pallet Ophalen Uitslag"
-    )
+    props.updateCurrentTaskType("uitslag_afmelden", "Pallet Ophalen Uitslag");
     setHover("lightgrey");
-    window.location.href = window.location.origin + "/#/scanner"
+    window.location.href = window.location.origin + "/#/scanner";
   };
 
   if (props.pakbon_rijen.length === 0) {
@@ -146,7 +139,7 @@ function TasksUitslag(props) {
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         component="nav"
         aria-labelledby="nested-list-subheader"
-        onClick={()=> handleClick()}
+        onClick={() => handleClick()}
         subheader={
           <ListSubheader
             component="div"
@@ -157,7 +150,9 @@ function TasksUitslag(props) {
               {props.pakbon_info.customer}
             </h2>
             <h4 style={{ marginTop: "0px" }}>
-              {"Aantal gepicked: "}{props.pakbon_info.picked}/{props.pakbon_info.items} - {"Nog te picken items:"}
+              {"Aantal gepicked: "}
+              {props.pakbon_info.picked}/{props.pakbon_info.items} -{" "}
+              {"Nog te picken items:"}
             </h4>
             <Divider />
           </ListSubheader>

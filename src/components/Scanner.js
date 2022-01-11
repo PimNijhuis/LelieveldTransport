@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import QrReader from "modern-react-qr-reader";
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 import { connect } from "react-redux";
@@ -8,41 +8,45 @@ import {
   uitslagAanmeldenInfoAPI,
   uitslagAanmeldenRowsAPI,
   uitslagAfmeldenAPI,
-  defectOpslaan
+  defectOpslaan,
 } from "../services/scanner/actions";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { Redirect } from "react-router-dom";
+import { validQR } from "../services/cameraDefect/actions";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 function ScannerComponent(props) {
   const type = props.type;
-  const [scanType, setScanType] = React.useState("Pallet/Plaats Scannen")
+  const [scanType, setScanType] = useState("Pallet/Plaats Scannen");
 
   const fetchLabel = (label) => {
-    if(scanType === "Probleem melden"){
-      props.defectOpslaan(label)
-      window.location.href = window.location.origin + "/#/camera-defect";
-      return;
-    }
-    switch (type) {
-      case "inslag_aanmelden":
-        props.inslagAanmeldenAPI(label);
-        break;
-      case "inslag_afmelden":
-        props.inslagAfmeldenAPI(label, props.item_info.label);
-        break;
-      case "uitslag_aanmelden":
-        props.uitslagAanmeldenInfoAPI(label, props.item_info.label);
-        props.uitslagAanmeldenRowsAPI(label, props.item_info.label);
-        break;
-      case "uitslag_afmelden":
-        props.uitslagAfmeldenAPI(props.pakbon_info.qr_pakbon, label);
-        break;
-      default:
-        break;
-    }
+    validQR(label).then((response) => {
+      if (scanType === "Probleem melden") {
+        if (response) {
+          props.defectOpslaan(label);
+        }
+        return;
+      }
+
+      switch (type) {
+        case "inslag_aanmelden":
+          props.inslagAanmeldenAPI(label);
+          break;
+        case "inslag_afmelden":
+          props.inslagAfmeldenAPI(label, props.item_info.label);
+          break;
+        case "uitslag_aanmelden":
+          props.uitslagAanmeldenInfoAPI(label, props.item_info.label);
+          props.uitslagAanmeldenRowsAPI(label, props.item_info.label);
+          break;
+        case "uitslag_afmelden":
+          props.uitslagAfmeldenAPI(props.pakbon_info.qr_pakbon, label);
+          break;
+        default:
+          break;
+      }
+    });
   };
 
   const handleScan = (data) => {
@@ -59,8 +63,8 @@ function ScannerComponent(props) {
     setScanType(event.target.value);
   };
 
-  return(
-    <div className="contentWrapper" style={{marginTop: '15px'}}>
+  return (
+    <div className="contentWrapper" style={{ marginTop: "15px" }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Actie</InputLabel>
         <Select
@@ -70,13 +74,15 @@ function ScannerComponent(props) {
           label="Type"
           onChange={handleChange}
         >
-          <MenuItem value={"Pallet/Plaats Scannen"}>Pallet/Plaats Scannen</MenuItem>
+          <MenuItem value={"Pallet/Plaats Scannen"}>
+            Pallet/Plaats Scannen
+          </MenuItem>
           <MenuItem value={"Probleem melden"}>Probleem melden</MenuItem>
         </Select>
       </FormControl>
       <QrReader onError={handleError} onScan={handleScan} />
     </div>
-  )
+  );
 }
 
 function mapStateToProps(state) {
@@ -93,5 +99,5 @@ export default connect(mapStateToProps, {
   uitslagAanmeldenInfoAPI,
   uitslagAanmeldenRowsAPI,
   uitslagAfmeldenAPI,
-  defectOpslaan
+  defectOpslaan,
 })(ScannerComponent);
