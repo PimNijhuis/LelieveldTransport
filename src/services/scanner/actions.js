@@ -5,13 +5,13 @@ import {
   UITSLAG_AANMELDEN_INFO,
   UITSLAG_AANMELDEN_ROWS,
   UITSLAG_AFMELDEN,
-  DEFECT_OPSLAAN
+  DEFECT_OPSLAAN,
 } from "./actionTypes";
 
 export const defectOpslaan = (qr_string) => (dispatch) => {
   dispatch({ type: DEFECT_OPSLAAN, payload: qr_string });
-
-}
+  window.location.href = window.location.origin + "/#/camera-defect";
+};
 
 export const inslagAanmeldenAPI = (qr_string) => (dispatch) => {
   const requestData = {
@@ -64,7 +64,7 @@ export const inslagAfmeldenAPI = (qr_string, label) => (dispatch) => {
         alert(response.data.message);
         if (response.data.ok) {
           dispatch({ type: INSLAG_CHECK, payload: [] });
-          window.location.href = window.location.origin + "/#/action-menu"
+          window.location.href = window.location.origin + "/#/action-menu";
         }
       });
     })
@@ -96,17 +96,17 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
           items: response.data.items,
           picked: response.data.picked,
           qr_pakbon: qr_string,
-          ready_for_picking: response.data.ready_for_picking
+          ready_for_picking: response.data.ready_for_picking,
         };
 
         // Dispatch data
         dispatch({ type: UITSLAG_AANMELDEN_INFO, payload: itemData });
-        console.log('hierrr')
+        console.log("hierrr");
         //window.location.href = window.location.origin + "/#/tasks";
       }
     })
     .catch((err) => {
-      alert("ERROR: Deze Plaats-QR code is niet bekend");
+      //alert("ERROR: Deze Plaats-QR code is niet bekend");
       console.log(
         "[scanner.actions.js] uitslagAanmeldenInfoAPI || Could not fetch item data. Try again later."
       );
@@ -121,9 +121,9 @@ export const uitslagAanmeldenRowsAPI = (qr_string) => (dispatch) => {
   axios
     .post("/warehouse_order_rows", requestDataPlace)
     .then((response) => {
-      if(response.data.length === 0){
+      if (response.data.length === 0) {
         //to skip this call if first one fails
-        return
+        return;
       }
       console.dir(response.data);
       if (response.data.token === "Missing or False") {
@@ -152,11 +152,11 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
     order: order,
     label: qr_string,
   };
-  console.dir(requestDataPlace)
+  console.dir(requestDataPlace);
   axios
     .post("/warehouse_order_row_picked", requestDataPlace)
     .then((response) => {
-      console.dir(response.data)
+      console.dir(response.data);
       if (response.data.token === "Missing or False") {
         alert("Deze QR code is niet bekend");
         return;
@@ -169,22 +169,24 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
 
         // Dispatch data
         dispatch({ type: UITSLAG_AFMELDEN, payload: itemData });
-        if(itemData.rows.length === 0){
+        if (itemData.rows.length === 0) {
           window.location.href = window.location.origin + "/#/action-menu";
-        } else{
+        } else {
           window.location.href = window.location.origin + "/#/tasks";
         }
       } else if (response.data.message === "Row Already Marked As Picked") {
-        alert("Deze pallet is al gemarkeerd als opgehaald!")
-      } else if(response.data.message === "Order Was Already Marked AS Picked And Ready!"){
-        alert("Alle pallets zijn al opgehaald!")
-      }else if(response.data.message==="Order Picked and Ready!"){
-        alert("Alle pallets zijn opgehaald en pakbon is afgewerkt!")
+        alert("Deze pallet is al gemarkeerd als opgehaald!");
+      } else if (
+        response.data.message ===
+        "Order Was Already Marked AS Picked And Ready!"
+      ) {
+        alert("Alle pallets zijn al opgehaald!");
+      } else if (response.data.message === "Order Picked and Ready!") {
+        alert("Alle pallets zijn opgehaald en pakbon is afgewerkt!");
         window.location.href = window.location.origin + "/#/action-menu";
-      }else{
-        alert("Deze pallet is niet correct")
+      } else {
+        alert("Deze pallet is niet correct");
       }
-
     })
     .catch((err) => {
       alert("ERROR: Deze Plaats-QR code is niet bekend");

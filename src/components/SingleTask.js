@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import CardHeader from "@material-ui/core/CardHeader";
-import { deepOrange } from "@material-ui/core/colors";
 import Box from "@material-ui/core/Box";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-}));
-
 export function SingleTask(props) {
-  const classes = useStyles();
   const rowData = props.rowData;
   const [statusColor, setStatusColor] = useState("");
 
