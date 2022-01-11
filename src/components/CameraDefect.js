@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Camera, { FACING_MODES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
@@ -31,21 +31,33 @@ function CameraComponent(props) {
     console.dir("niet verstuurd");
   };
 
+  const finalize = () => {
+    console.log("typeProblem", typeProblem);
+    console.log("props", props.type);
+    notifyProblem(props.defect_qr, typeProblem, message, baseURL);
+    setOpen(false);
+    console.dir("verstuurd");
+  };
+
+  useEffect(() => {
+    if (typeProblem !== "") {
+      finalize();
+    }
+  }, [typeProblem]);
+
   const handleYes = () => {
-    // TODO: api call
     switch (props.type) {
       case "inslag_aanmelden":
       case "inslag_afmelden":
         setTypeProblem("incoming");
+        break;
       case "uitslag_aanmelden":
       case "uitslag_afmelden":
         setTypeProblem("outgoing");
+        break;
       default:
         break;
     }
-    notifyProblem(props.defect_qr, typeProblem, message, baseURL);
-    setOpen(false);
-    console.dir("verstuurd");
   };
 
   const handleChange = (event) => {

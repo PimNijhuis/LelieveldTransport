@@ -46,7 +46,11 @@ export const notifyProblem = (qr_string, type, description, base64) => {
         alert("Deze QR code is niet bekend");
         return;
       }
-      alert(response.data.message);
+      if (response.data === "") {
+        alert("Er is iets fout gegaan tijdens het melden van het probleem");
+      } else {
+        alert(response.data.message);
+      }
       window.location.href = window.location.origin + "/#/scanner";
     })
     .catch((err) => {
