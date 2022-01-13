@@ -12,7 +12,7 @@ import requireAuth from "./utils/requireAuth";
 axios.defaults.baseURL = "https://lelieveld.suppliershub.eu/wmsapi/";
 
 // axios.defaults.headers.common["Authorization"] =
-//   "5ff3d38f-fdd1-448a-9370-0112d84c8b00";
+//   "2d83baf4-f589-414c-9586-afcf1ea9fa59";
 // axios.defaults.headers.common["Token"] = "4b3b596e-1b5b-4026-9051-eb752f818d98";
 //axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3000';
 axios.defaults.headers.common["Content-Type"] = "application/json";

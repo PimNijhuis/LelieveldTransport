@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import QrReader from "modern-react-qr-reader";
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 import { connect } from "react-redux";
@@ -11,14 +11,20 @@ import {
   defectOpslaan,
 } from "../services/scanner/actions";
 import { validQR } from "../services/cameraDefect/actions";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import Button from "@material-ui/core/Button";
 
 function ScannerComponent(props) {
   const type = props.type;
   const [scanType, setScanType] = useState("Pallet/Plaats Scannen");
+  const [whichButton, setWhichButton] = useState("Probleem melden");
+
+  useEffect(() => {
+    setWhichButton(
+      scanType === "Pallet/Plaats Scannen"
+        ? "Probleem melden"
+        : "Pallet/Plaats Scannen"
+    );
+  }, [scanType]);
 
   const fetchLabel = (label) => {
     validQR(label).then((response) => {
@@ -64,24 +70,38 @@ function ScannerComponent(props) {
   };
 
   return (
-    <div className="contentWrapper" style={{ marginTop: "15px" }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Actie</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={scanType}
-          label="Type"
-          onChange={handleChange}
+    <center>
+      <div className="contentWrapper" style={{ marginTop: "15px" }}>
+        {scanType === "Probleem melden" ? (
+          <h4 style={{ paddingTop: "15px" }}>
+            Scan de pallet om een probleem te melden:
+          </h4>
+        ) : (
+          ""
+        )}
+
+        <QrReader onError={handleError} onScan={handleScan} />
+        <Button
+          color={"primary"}
+          variant={"contained"}
+          onClick={() => setScanType(whichButton)}
+          style={{
+            fontSize: "20px",
+            marginTop: "30px",
+            marginBottom: "30px",
+            marginRight: "30px",
+            marginLeft: "30px",
+            backgroundColor: whichButton === "Probleem melden" ? "#cc0000" : "",
+          }}
         >
-          <MenuItem value={"Pallet/Plaats Scannen"}>
-            Pallet/Plaats Scannen
-          </MenuItem>
-          <MenuItem value={"Probleem melden"}>Probleem melden</MenuItem>
-        </Select>
-      </FormControl>
-      <QrReader onError={handleError} onScan={handleScan} />
-    </div>
+          <h4 style={{ textTransform: "none" }}>
+            {whichButton === "Probleem melden"
+              ? "Klik hier om een probleem te melden"
+              : "Terug naar " + whichButton}
+          </h4>
+        </Button>
+      </div>
+    </center>
   );
 }
 

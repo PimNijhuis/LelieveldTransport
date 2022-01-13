@@ -9,7 +9,9 @@ function Header(props) {
       <header className="HeaderWrapper fadeInDelayed">
         <div className="HeaderTopTextWrapper">
           <img src={lelieveld} alt="Logo" className="HeaderLogo" />
-          <h1 className="HeaderText">{props.title}</h1>
+          <h1 className="HeaderText" style={{ fontSize: "22px" }}>
+            {props.title}
+          </h1>
         </div>
       </header>
     </div>
