@@ -90,8 +90,13 @@ function CameraComponent(props) {
         style={{ width: "100%" }}
         onKeyDown={handleKeyDown}
       />
-      <Button color="primary" variant="contained" onClick={handleClickOpen}>
-        Verstuur
+      <Button
+        style={{ fontSize: "20px", marginTop: "15px", marginBottom: "15px" }}
+        color="primary"
+        variant="contained"
+        onClick={handleClickOpen}
+      >
+        <h3 style={{ textTransform: "none" }}>{"Verstuur"}</h3>
       </Button>
 
       <Dialog

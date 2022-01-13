@@ -35,7 +35,10 @@ export function SingleTask(props) {
           avatar={
             <Avatar
               aria-label="quantity"
-              style={{ color: "ffffff", backgroundColor: `${statusColor}` }}
+              style={{
+                color: "ffffff",
+                backgroundColor: `${statusColor}`,
+              }}
             >
               {""}
             </Avatar>

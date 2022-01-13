@@ -106,7 +106,7 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
       }
     })
     .catch((err) => {
-      //alert("ERROR: Deze Plaats-QR code is niet bekend");
+      alert("ERROR: Deze QR code is niet bekend");
       console.log(
         "[scanner.actions.js] uitslagAanmeldenInfoAPI || Could not fetch item data. Try again later."
       );
@@ -140,7 +140,7 @@ export const uitslagAanmeldenRowsAPI = (qr_string) => (dispatch) => {
       }
     })
     .catch((err) => {
-      alert("ERROR: Deze Plaats-QR code is niet bekend");
+      //alert("ERROR: Deze Plaats-QR code is niet bekend");
       console.log(
         "[scanner.actions.js] uitslagAanmeldenRowsAPI || Could not fetch item data. Try again later."
       );
@@ -152,7 +152,7 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
     order: order,
     label: qr_string,
   };
-  console.dir(requestDataPlace);
+
   axios
     .post("/warehouse_order_row_picked", requestDataPlace)
     .then((response) => {
@@ -166,7 +166,7 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
         const itemData = {
           rows: response.data.rows,
         };
-
+        alert(response.data.message);
         // Dispatch data
         dispatch({ type: UITSLAG_AFMELDEN, payload: itemData });
         if (itemData.rows.length === 0) {

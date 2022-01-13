@@ -49,9 +49,10 @@ function TasksInslag(props) {
     return (
       <div>
         <center>
-          <h2>{props.item_info.product_name}</h2>
-          <h3>Pad: {props.item_info.destination.path}</h3>
-          <h3>Stelling: {props.item_info.destination.rack}</h3>
+          <h2 style={{ paddingTop: "20px" }}>{props.item_info.product_name}</h2>
+          <h3>{props.item_info.destination.warehouse}</h3>
+          <h3>Stelling: {props.item_info.destination.path}</h3>
+          <h3>Rek: {props.item_info.destination.rack}</h3>
           <h3>Etage: {props.item_info.destination.floor} </h3>
           <h3>#{props.item_info.destination.place_number} </h3>
 
