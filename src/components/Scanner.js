@@ -12,6 +12,7 @@ import {
 } from "../services/scanner/actions";
 import { validQR } from "../services/cameraDefect/actions";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 
 function ScannerComponent(props) {
   const type = props.type;
@@ -69,16 +70,18 @@ function ScannerComponent(props) {
     setScanType(event.target.value);
   };
 
+  console.log(axios.defaults.headers.common["Token"]);
+  console.log(axios.defaults.headers.common["Authorization"]);
   return (
     <center>
       <div className="contentWrapper" style={{ marginTop: "15px" }}>
-        {scanType === "Probleem melden" ? (
-          <h4 style={{ paddingTop: "15px" }}>
+        {/* {scanType === "Probleem melden" ? (
+          <h4 style={{ paddingTop: "15px", position: "fixed" }}>
             Scan de pallet om een probleem te melden:
           </h4>
         ) : (
           ""
-        )}
+        )} */}
 
         <QrReader onError={handleError} onScan={handleScan} />
         <Button
@@ -86,18 +89,19 @@ function ScannerComponent(props) {
           variant={"contained"}
           onClick={() => setScanType(whichButton)}
           style={{
-            fontSize: "20px",
+            fontSize: "18px",
             marginTop: "30px",
             marginBottom: "30px",
             marginRight: "30px",
             marginLeft: "30px",
+            height: "80px",
             backgroundColor: whichButton === "Probleem melden" ? "#cc0000" : "",
           }}
         >
           <h4 style={{ textTransform: "none" }}>
             {whichButton === "Probleem melden"
-              ? "Klik hier om een probleem te melden"
-              : "Terug naar " + whichButton}
+              ? "Meld een probleem"
+              : "Terug naar inslag / uitslag"}
           </h4>
         </Button>
       </div>

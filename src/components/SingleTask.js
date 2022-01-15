@@ -12,18 +12,16 @@ export function SingleTask(props) {
   useEffect(() => {
     switch (rowData.status) {
       case 1:
+        setStatusColor("blue");
+        break;
+      case 2:
         setStatusColor("green");
         break;
-      case 0:
-        setStatusColor("grey");
-        break;
-
       case 99:
         setStatusColor("red");
         break;
-
       default:
-        setStatusColor("blue");
+        setStatusColor("grey");
         break;
     }
   }, [statusColor]);

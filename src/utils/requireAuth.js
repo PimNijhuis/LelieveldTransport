@@ -10,6 +10,8 @@ export default function requireAuth(ComposedComponent) {
         return <Redirect to="/login" />;
       } else {
         axios.defaults.headers.common["Token"] = this.props.token;
+        axios.defaults.headers.common["Authorization"] =
+          this.props.authorization;
         return <ComposedComponent {...this.props} />;
       }
     }
@@ -19,6 +21,7 @@ export default function requireAuth(ComposedComponent) {
     return {
       userId: state.login.login_data.user_id,
       token: state.login.login_data.token,
+      authorization: state.login.login_data.authorization,
     };
   }
 

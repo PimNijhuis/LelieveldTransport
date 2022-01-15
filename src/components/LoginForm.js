@@ -28,9 +28,7 @@ function Login(props) {
         <div className="LoginForm fadeIn">
           <img src={logoLelieveld} alt="Logo" className="LoginFormLogo" />
           <form onSubmit={handleSubmit}>
-            <p style={{ fontSize: "20px" }}>
-              Welkom bij <br /> Lelieveld Transporten B.V.!
-            </p>
+            <p style={{ fontSize: "20px" }}>Welkom!</p>
             <input
               className="LoginFormInput"
               placeholder="Gebruikersnaam"

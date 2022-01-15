@@ -87,11 +87,18 @@ function CameraComponent(props) {
       <h4>Geef uw commentaar bij de foto:</h4>
       <textarea
         onChange={handleChange}
-        style={{ width: "100%" }}
+        style={{ width: "100%", height: "60px" }}
         onKeyDown={handleKeyDown}
       />
       <Button
-        style={{ fontSize: "20px", marginTop: "15px", marginBottom: "15px" }}
+        style={{
+          fontSize: "18px",
+          marginTop: "30px",
+          marginBottom: "30px",
+          marginRight: "30px",
+          marginLeft: "30px",
+          height: "50px",
+        }}
         color="primary"
         variant="contained"
         onClick={handleClickOpen}

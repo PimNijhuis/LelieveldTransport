@@ -3,7 +3,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import "../styles/BottomNavBar.scss";
 import CropFreeIcon from "@material-ui/icons/CropFree";
-import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
+import HomeIcon from "@material-ui/icons/Home";
 
 export default function BottomNavBar(props) {
   return (
@@ -11,7 +11,7 @@ export default function BottomNavBar(props) {
       <ul className="BottomNavBar">
         <Link to="/action-menu" style={{ textDecoration: "none" }}>
           <li>
-            <CompareArrowsIcon />
+            <HomeIcon />
           </li>
         </Link>
         <Link to="/scanner" style={{ textDecoration: "none" }}>
