@@ -5,7 +5,7 @@ import ActionMenu from "../components/ActionMenu";
 export default function ActionMenuView() {
   return (
     <div className="pageWrapper">
-      <Header title="Lelieveld Transporten B.V." />
+      <Header title="Hoofdmenu" />
       <div className="contentWrapper fadeInDelayed">
         <ActionMenu />
       </div>

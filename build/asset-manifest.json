@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "./static/css/main.8131d53a.chunk.css",
+    "main.js": "./static/js/main.b1cee420.chunk.js",
+    "main.js.map": "./static/js/main.b1cee420.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.96d2be6d.js",
+    "runtime-main.js.map": "./static/js/runtime-main.96d2be6d.js.map",
+    "static/css/2.d565e0ea.chunk.css": "./static/css/2.d565e0ea.chunk.css",
+    "static/js/2.ad7197bb.chunk.js": "./static/js/2.ad7197bb.chunk.js",
+    "static/js/2.ad7197bb.chunk.js.map": "./static/js/2.ad7197bb.chunk.js.map",
+    "static/js/3.69ea12b4.chunk.js": "./static/js/3.69ea12b4.chunk.js",
+    "static/js/3.69ea12b4.chunk.js.map": "./static/js/3.69ea12b4.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/2.d565e0ea.chunk.css.map": "./static/css/2.d565e0ea.chunk.css.map",
+    "static/css/main.8131d53a.chunk.css.map": "./static/css/main.8131d53a.chunk.css.map",
+    "static/js/2.ad7197bb.chunk.js.LICENSE.txt": "./static/js/2.ad7197bb.chunk.js.LICENSE.txt",
+    "static/media/backgroundlelieveldeditted.690a84d7.jpeg": "./static/media/backgroundlelieveldeditted.690a84d7.jpeg",
+    "static/media/forklift.642080e5.png": "./static/media/forklift.642080e5.png",
+    "static/media/idle.24075cf2.jpg": "./static/media/idle.24075cf2.jpg",
+    "static/media/inslag.0aafd22e.PNG": "./static/media/inslag.0aafd22e.PNG",
+    "static/media/uitslag.75b9ac6d.PNG": "./static/media/uitslag.75b9ac6d.PNG"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.96d2be6d.js",
+    "static/css/2.d565e0ea.chunk.css",
+    "static/js/2.ad7197bb.chunk.js",
+    "static/css/main.8131d53a.chunk.css",
+    "static/js/main.b1cee420.chunk.js"
+  ]
+}

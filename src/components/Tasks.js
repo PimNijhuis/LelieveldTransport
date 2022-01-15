@@ -96,7 +96,7 @@ function TasksInslag(props) {
                 )
               }
             >
-              <h3 style={{ textTransform: "none" }}>{"Afmelden"}</h3>
+              <h3 style={{ textTransform: "none" }}>{"Scan Plaats"}</h3>
             </Button>
           </Link>
         </center>
@@ -109,7 +109,9 @@ function TasksUitslag(props) {
   const [hover, setHover] = useState("white");
 
   const handleClick = () => {
-    console.log("er is geklikt");
+    if (props.pakbon_info.code === 500) {
+      return;
+    }
     props.updateCurrentTaskType("uitslag_afmelden", "Pallet Ophalen Uitslag");
     setHover("lightgrey");
     window.location.href = window.location.origin + "/#/scanner";
@@ -133,43 +135,48 @@ function TasksUitslag(props) {
       </div>
     );
   } else {
-    console.dir(props.pakbon_rijen.rows);
-    console.dir(props.pakbon_info);
     return (
-      <List
-        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        onClick={() => handleClick()}
-        subheader={
-          <ListSubheader
-            component="div"
-            id="nested-list-subheader"
-            style={{ textAlign: "center", backgroundColor: "white" }}
-          >
-            <h2 style={{ color: "black", marginBottom: "0px" }}>
-              {props.pakbon_info.customer}
-            </h2>
-            <h4 style={{ marginTop: "0px" }}>
-              {"Aantal gepicked: "}
-              {props.pakbon_info.picked}/{props.pakbon_info.items} -{" "}
-              {"Nog te picken items:"}
-            </h4>
-            <Divider />
-          </ListSubheader>
-        }
-      >
-        {props.pakbon_rijen.rows.map((rowData) => (
-          <div>
-            <ListItem style={{ justifyContent: "center", display: "block" }}>
-              <SingleTask rowData={rowData} />
-            </ListItem>
-          </div>
-        ))}
-        <br />
-        <br />
-        <br />
-      </List>
+      <>
+        <List
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          onClick={() => handleClick()}
+          subheader={
+            <ListSubheader
+              component="div"
+              id="nested-list-subheader"
+              style={{ textAlign: "center", backgroundColor: "white" }}
+            >
+              <h2 style={{ color: "black", marginBottom: "0px" }}>
+                {props.pakbon_info.customer}
+              </h2>
+              {props.pakbon_info.code !== 500 ? (
+                <h4 style={{ marginTop: "0px" }}>
+                  {"Aantal gepicked: "}
+                  {props.pakbon_info.picked}/{props.pakbon_info.items} -{" "}
+                  {"Items:"}
+                </h4>
+              ) : (
+                <h4 style={{ marginTop: "0px" }}>{"Items:"}</h4>
+              )}
+
+              <Divider />
+            </ListSubheader>
+          }
+        >
+          {props.pakbon_rijen.rows.map((rowData) => (
+            <div>
+              <ListItem style={{ justifyContent: "center", display: "block" }}>
+                <SingleTask rowData={rowData} />
+              </ListItem>
+            </div>
+          ))}
+          <br />
+          <br />
+          <br />
+        </List>
+      </>
     );
   }
 }

@@ -24,6 +24,9 @@ export const inslagAanmeldenAPI = (qr_string) => (dispatch) => {
       if (response.data.token === "Missing or False") {
         alert("Deze QR code is niet bekend");
         return;
+      } else if (response.data.message === "Pallet is al weggezet!") {
+        alert("Dit pallet is reeds weggezet!");
+        return;
       } else {
         const itemData = {
           destination: response.data.destination,
@@ -89,6 +92,9 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
         alert("Deze QR code is niet bekend");
         return;
       } else {
+        if (response.data.code === 500) {
+          alert("Deze Order is reeds verwerkt!");
+        }
         const itemData = {
           orderdate: response.data.orderdate,
           customer: response.data.customer,
@@ -97,6 +103,7 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
           picked: response.data.picked,
           qr_pakbon: qr_string,
           ready_for_picking: response.data.ready_for_picking,
+          code: response.data.code,
         };
 
         // Dispatch data

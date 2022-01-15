@@ -19,12 +19,12 @@ export const validQR = (qr_string) => {
       } else {
         // const repsponse_ = "no chill";
         // console.log("no chill");
-
+        alert("Geen goede QR-code gescand");
         return false;
       }
     })
     .catch((err) => {
-      alert("ERROR: Probleem kon niet worden gemeld");
+      alert("ERROR: invalide QR code gescand");
       console.log(
         "[cameraDefect.actions.js] notifyProblem || Could not notify problem. Try again later."
       );
