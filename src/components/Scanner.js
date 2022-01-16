@@ -9,6 +9,7 @@ import {
   uitslagAanmeldenRowsAPI,
   uitslagAfmeldenAPI,
   defectOpslaan,
+  checkItemAPI,
 } from "../services/scanner/actions";
 import { validQR } from "../services/cameraDefect/actions";
 import Button from "@material-ui/core/Button";
@@ -50,6 +51,12 @@ function ScannerComponent(props) {
         case "uitslag_afmelden":
           props.uitslagAfmeldenAPI(props.pakbon_info.qr_pakbon, label);
           break;
+        case "check_item_verplaatsen":
+          props.checkItemAPI(label);
+          break;
+        case "check_plaats_verplaatsen":
+          props.checkItemAPI(label);
+          break;
         default:
           break;
       }
@@ -70,19 +77,9 @@ function ScannerComponent(props) {
     setScanType(event.target.value);
   };
 
-  console.log(axios.defaults.headers.common["Token"]);
-  console.log(axios.defaults.headers.common["Authorization"]);
   return (
     <center>
       <div className="contentWrapper" style={{ marginTop: "15px" }}>
-        {/* {scanType === "Probleem melden" ? (
-          <h4 style={{ paddingTop: "15px", position: "fixed" }}>
-            Scan de pallet om een probleem te melden:
-          </h4>
-        ) : (
-          ""
-        )} */}
-
         <QrReader onError={handleError} onScan={handleScan} />
         <Button
           color={"primary"}
@@ -124,4 +121,5 @@ export default connect(mapStateToProps, {
   uitslagAanmeldenRowsAPI,
   uitslagAfmeldenAPI,
   defectOpslaan,
+  checkItemAPI,
 })(ScannerComponent);

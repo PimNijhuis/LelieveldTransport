@@ -11,6 +11,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import ExitIcon from "@material-ui/icons/ExitToApp";
+// import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -121,6 +123,37 @@ function ActionMenu(props) {
                 height="100"
               />
             </div>
+          </Button>
+        </Link>
+        <Link to={"/scanner"} style={{ textDecoration: "none" }}>
+          <Button
+            color="primary"
+            variant="contained"
+            style={{
+              minWidth: "300px",
+              minHeight: "150px",
+              margin: "40px 0px 0px",
+              justifyContent: "space-between",
+            }}
+            onClick={() =>
+              props.updateCurrentTaskType(
+                "check_item_verplaatsen",
+                "Pallet Scannen voor verplaatsing"
+              )
+            }
+          >
+            <div>
+              <img
+                src={logoUitslag}
+                alt="logoUitslag"
+                width="150"
+                height="100"
+                marginLeft="0px"
+              />
+            </div>
+            <h3 style={{ textTransform: "none", marginRight: "30px" }}>
+              {"Verplaatsen"}
+            </h3>
           </Button>
         </Link>
       </div>

@@ -22,6 +22,9 @@ function WhichTasksScreen(props) {
     case "uitslag_aanmelden":
     case "uitslag_afmelden":
       return TasksUitslag(props);
+    case "check_item_verplaatsen":
+    case "check_plaats_verplaatsen":
+      return TasksVerplaatsen(props);
     default:
       break;
   }
@@ -180,9 +183,30 @@ function TasksUitslag(props) {
     );
   }
 }
+
+function TasksVerplaatsen(props) {
+  // adding expanded/collapsed state to MenuItem component from before
+  // const [expanded, setExpanded] = React.useState(false);
+  // const clickHandler = React.useCallback(() => setExpanded(!expanded), [expanded]);
+
+  return (
+    // <li onClick={clickHandler} className={expanded ? 'expanded' : 'collapsed'}>
+    //   <div className='menu-item-title'>{title}</div>
+    //     {{ items.length && (
+    //       <ul className='submenu'>
+    //         { items.map( item => <MenuItem key={item.title} item={item} />}
+    //       </ul>
+    //     )}
+    //   </div>
+    // </li>
+    <p>{"ola:"}</p>
+  );
+}
+
 function mapStateToProps(state) {
   return {
     item_info: state.scanner.item_info,
+    item_check_info: state.scanner.item_check_info,
     pakbon_info: state.scanner.pakbon_info,
     pakbon_rijen: state.scanner.pakbon_rijen,
     type: state.currentTaskType.type,

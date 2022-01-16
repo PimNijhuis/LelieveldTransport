@@ -6,6 +6,7 @@ import {
   UITSLAG_AANMELDEN_ROWS,
   UITSLAG_AFMELDEN,
   DEFECT_OPSLAAN,
+  CHECK_ITEM,
 } from "./actionTypes";
 
 export const defectOpslaan = (qr_string) => (dispatch) => {
@@ -95,6 +96,10 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
         if (response.data.code === 500) {
           alert("Deze Order is reeds verwerkt!");
         }
+        if (response.data.code === 400) {
+          alert("Order nog niet gereed voor uitslag!");
+          return;
+        }
         const itemData = {
           orderdate: response.data.orderdate,
           customer: response.data.customer,
@@ -130,6 +135,9 @@ export const uitslagAanmeldenRowsAPI = (qr_string) => (dispatch) => {
     .then((response) => {
       if (response.data.length === 0) {
         //to skip this call if first one fails
+        return;
+      }
+      if (response.data.code === 400) {
         return;
       }
       console.dir(response.data);
@@ -199,6 +207,39 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
       alert("ERROR: Deze Plaats-QR code is niet bekend");
       console.log(
         "[scanner.actions.js] inslagAfmeldenAPI || Could not fetch item data. Try again later."
+      );
+    });
+};
+
+export const checkItemAPI = (qr_string) => (dispatch) => {
+  const requestData = {
+    label: qr_string,
+  };
+
+  axios
+    .post("/check_item", requestData)
+    .then((response) => {
+      if (response.data.message !== "Valide QR Code") {
+        alert("Er kon geen data worden opgehaald voor dit item");
+        return;
+      } else {
+        const itemData = {
+          label: response.data.data.label,
+          sku: response.data.data.sku,
+          supplier: response.data.data.supplier,
+          customer: response.data.data.customer,
+          location: response.data.data.location,
+          product_name: response.data.data.product_name,
+        };
+
+        dispatch({ type: CHECK_ITEM, payload: itemData });
+        window.location.href = window.location.origin + "/#/tasks";
+      }
+    })
+    .catch((err) => {
+      alert("ERROR: Deze QR code is niet bekend");
+      console.log(
+        "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
       );
     });
 };
