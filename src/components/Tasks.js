@@ -8,11 +8,25 @@ import {
   List,
   ListSubheader,
   ListItem,
+  Collapse,
+  ListItemText,
   Divider,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import forklift from "../assets/forklift.png";
 import idle from "../assets/idle.jpg";
+// import ListSubheader from "@mui/material/ListSubheader";
+// import List from "@mui/material/List";
+// import ListItemButton from "@mui/material/ListItemButton";
+// import ListItemIcon from "@mui/material/ListItemIcon";
+// import ListItemText from "@mui/material/ListItemText";
+// import Collapse from "@mui/material/Collapse";
+// import InboxIcon from "@mui/icons-material/MoveToInbox";
+// import DraftsIcon from "@mui/icons-material/Drafts";
+// import SendIcon from "@mui/icons-material/Send";
+// import ExpandLess from "@mui/icons-material/ExpandLess";
+// import ExpandMore from "@mui/icons-material/ExpandMore";
+// import StarBorder from "@mui/icons-material/StarBorder";
 
 function WhichTasksScreen(props) {
   switch (props.type) {
@@ -185,28 +199,189 @@ function TasksUitslag(props) {
 }
 
 function TasksVerplaatsen(props) {
-  // adding expanded/collapsed state to MenuItem component from before
-  // const [expanded, setExpanded] = React.useState(false);
-  // const clickHandler = React.useCallback(() => setExpanded(!expanded), [expanded]);
+  const [openItem, setOpenItem] = useState(true);
+  const [openPlaats, setOpenPlaats] = useState(false);
 
-  return (
-    // <li onClick={clickHandler} className={expanded ? 'expanded' : 'collapsed'}>
-    //   <div className='menu-item-title'>{title}</div>
-    //     {{ items.length && (
-    //       <ul className='submenu'>
-    //         { items.map( item => <MenuItem key={item.title} item={item} />}
-    //       </ul>
-    //     )}
-    //   </div>
-    // </li>
-    <p>{"ola:"}</p>
-  );
+  const handleClickItem = () => {
+    setOpenItem(!openItem);
+  };
+
+  const handleClickVerplaatsen = () => {};
+
+  const handleClickPlaats = () => {
+    setOpenPlaats(!openPlaats);
+  };
+  if (props.item_check_info.length === 0) {
+    return (
+      <div>
+        <center>
+          <h3 style={{ paddingTop: "20px" }}>
+            Er zijn op dit moment geen taken.
+          </h3>
+          <img
+            src={idle}
+            alt="idle"
+            width="300"
+            height="200"
+            marginLeft="0px"
+          />
+        </center>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <ListItem
+          onClick={handleClickItem}
+          style={{
+            paddingTop: "20px",
+            marginTop: "20px",
+            height: "50px",
+            // paddingBottom: "5px",
+          }}
+        >
+          <ListItemText
+            style={{
+              textDecoration: "none",
+              marginTop: "5px",
+              // marginBottom: "0px",
+            }}
+          >
+            <h3>Item info</h3>
+          </ListItemText>
+        </ListItem>
+        {openItem ? (
+          <Divider
+            style={{ height: "3px", width: "80%", marginLeft: "16px" }}
+          />
+        ) : (
+          ""
+        )}
+        <Collapse in={openItem} timeout="auto" unmountOnExit>
+          <List component="div" style={{ paddingLeft: "16px" }}>
+            <ListItemText primary={props.item_check_info.customer} />
+            <ListItemText primary={props.item_check_info.supplier} />
+            <ListItemText primary={props.item_check_info.sku} />
+            <ListItemText primary={props.item_check_info.product_name} />
+            <center>
+              <Divider style={{ height: "2px", width: "50%" }} />
+            </center>
+            <ListItemText
+              primary={"Warehouse: " + props.item_check_info.location.warehouse}
+            />
+            <ListItemText
+              primary={"Stelling:" + props.item_check_info.location.path}
+            />
+            <ListItemText
+              primary={"Rek: " + props.item_check_info.location.rack}
+            />
+            <ListItemText
+              primary={"Etage: " + props.item_check_info.location.floor}
+            />
+            <ListItemText
+              primary={"#" + props.item_check_info.location.place_number}
+            />
+          </List>
+        </Collapse>
+        <Divider style={{ height: "3px" }} />
+        <ListItem
+          onClick={handleClickPlaats}
+          style={{ paddingTop: "0px", marginTop: "0px" }}
+        >
+          <ListItemText
+            style={{
+              height: "50px",
+              paddingTop: "0px",
+              paddingBottom: "0px",
+              marginBottom: "0px",
+            }}
+          >
+            <h3>Plaats info</h3>
+          </ListItemText>
+        </ListItem>
+        {openPlaats ? (
+          <Divider
+            style={{ height: "3px", width: "80%", marginLeft: "16px" }}
+          />
+        ) : (
+          ""
+        )}
+        <Collapse in={openPlaats} timeout="auto" unmountOnExit>
+          <List component="div" style={{ paddingLeft: "16px" }}>
+            <Link to={"/scanner"} style={{ textDecoration: "none" }}>
+              <Button
+                variant={"contained"}
+                color={"primary"}
+                style={{ textDecoration: "none", marginTop: "10px" }}
+                onClick={() =>
+                  props.updateCurrentTaskType(
+                    "check_plaats_verplaatsen",
+                    "Nieuwe plaats pallet"
+                  )
+                }
+              >
+                <h4>Scan een plaats</h4>
+              </Button>
+            </Link>
+            <br />
+            {props.plaats_check_info.length === 0 ? (
+              <></>
+            ) : (
+              <>
+                <ListItemText
+                  primary={
+                    "Warehouse: " + props.plaats_check_info.location.warehouse
+                  }
+                />
+                <ListItemText
+                  primary={"Stelling:" + props.plaats_check_info.location.path}
+                />
+                <ListItemText
+                  primary={"Rek: " + props.plaats_check_info.location.rack}
+                />
+                <ListItemText
+                  primary={"Etage: " + props.plaats_check_info.location.floor}
+                />
+                <ListItemText
+                  primary={"#" + props.plaats_check_info.location.place_number}
+                />
+              </>
+            )}
+          </List>
+        </Collapse>
+        {props.plaats_check_info.length === 0 ? (
+          <></>
+        ) : (
+          <center>
+            <Divider style={{ height: "3px" }} />
+            <Button
+              color={"primary"}
+              variant={"contained"}
+              onClick={() => handleClickVerplaatsen()}
+              style={{
+                fontSize: "18px",
+                marginTop: "30px",
+                marginBottom: "30px",
+                marginRight: "30px",
+                marginLeft: "30px",
+                height: "80px",
+                backgroundColor: "primary",
+              }}
+            >
+              <h4 style={{ textTransform: "none" }}>Verplaats pallet!</h4>
+            </Button>
+          </center>
+        )}
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
   return {
     item_info: state.scanner.item_info,
     item_check_info: state.scanner.item_check_info,
+    plaats_check_info: state.scanner.plaats_check_info,
     pakbon_info: state.scanner.pakbon_info,
     pakbon_rijen: state.scanner.pakbon_rijen,
     type: state.currentTaskType.type,

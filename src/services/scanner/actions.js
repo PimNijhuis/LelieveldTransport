@@ -7,6 +7,7 @@ import {
   UITSLAG_AFMELDEN,
   DEFECT_OPSLAAN,
   CHECK_ITEM,
+  CHECK_PLAATS,
 } from "./actionTypes";
 
 export const defectOpslaan = (qr_string) => (dispatch) => {
@@ -233,6 +234,75 @@ export const checkItemAPI = (qr_string) => (dispatch) => {
         };
 
         dispatch({ type: CHECK_ITEM, payload: itemData });
+        window.location.href = window.location.origin + "/#/tasks";
+      }
+    })
+    .catch((err) => {
+      alert("ERROR: Deze QR code is niet bekend");
+      console.log(
+        "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
+      );
+    });
+};
+
+export const checkPlaatsAPI = (qr_string) => (dispatch) => {
+  const requestData = {
+    place: qr_string,
+  };
+
+  axios
+    .post("/check_place", requestData)
+    .then((response) => {
+      if (response.data.message !== "Valide QR Code") {
+        alert("Er kon geen data worden opgehaald voor dit item");
+        return;
+      } else {
+        const itemData = {
+          place: response.data.data.place,
+          warehouse: response.data.data.warehouse,
+          path: response.data.data.path,
+          rack: response.data.data.rack,
+          floor: response.data.data.floor,
+          place_number: response.data.data.place_number,
+          item: response.data.data.item,
+        };
+
+        dispatch({ type: CHECK_PLAATS, payload: itemData });
+        window.location.href = window.location.origin + "/#/tasks";
+      }
+    })
+    .catch((err) => {
+      alert("ERROR: Deze QR code is niet bekend");
+      console.log(
+        "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
+      );
+    });
+};
+
+export const moveItemAPI = (label, place) => () => {
+  const requestData = {
+    label: label,
+    place: place,
+  };
+
+  axios
+    .post("/move_item", requestData)
+    .then((response) => {
+      if (response.data.message !== "Valide QR Code") {
+        alert("Er kon geen data worden opgehaald voor dit item");
+        return;
+      } else {
+        const itemData = {
+          place: response.data.data.place,
+          warehouse: response.data.data.warehouse,
+          path: response.data.data.path,
+          rack: response.data.data.rack,
+          floor: response.data.data.floor,
+          place_number: response.data.data.place_number,
+          item: response.data.data.item,
+        };
+
+        dispatch({ type: CHECK_PLAATS, payload: itemData });
         window.location.href = window.location.origin + "/#/tasks";
       }
     })
