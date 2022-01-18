@@ -212,74 +212,85 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
     });
 };
 
-export const checkItemAPI = (qr_string) => (dispatch) => {
-  const requestData = {
-    label: qr_string,
+export const checkItemAPI =
+  (qr_string, redirect = true) =>
+  (dispatch) => {
+    const requestData = {
+      label: qr_string,
+    };
+
+    return axios
+      .post("/check_item", requestData)
+      .then((response) => {
+        if (response.data.message !== "Valide QR Code") {
+          alert("Er kon geen data worden opgehaald voor dit item");
+          return;
+        } else {
+          const itemData = {
+            label: response.data.data.label,
+            sku: response.data.data.sku,
+            supplier: response.data.data.supplier,
+            customer: response.data.data.customer,
+            location: response.data.data.location,
+            product_name: response.data.data.product_name,
+          };
+          if (redirect) {
+            dispatch({ type: CHECK_ITEM, payload: itemData });
+            window.location.href = window.location.origin + "/#/tasks";
+          } else {
+            //console.dir(itemData);
+            return itemData;
+          }
+        }
+      })
+      .catch((err) => {
+        alert("ERROR: Deze QR code is niet bekend");
+        console.log(
+          "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
+        );
+      });
   };
 
-  axios
-    .post("/check_item", requestData)
-    .then((response) => {
-      if (response.data.message !== "Valide QR Code") {
-        alert("Er kon geen data worden opgehaald voor dit item");
-        return;
-      } else {
-        const itemData = {
-          label: response.data.data.label,
-          sku: response.data.data.sku,
-          supplier: response.data.data.supplier,
-          customer: response.data.data.customer,
-          location: response.data.data.location,
-          product_name: response.data.data.product_name,
-        };
+export const checkPlaatsAPI =
+  (qr_string, redirect = true) =>
+  (dispatch) => {
+    const requestData = {
+      place: qr_string,
+    };
 
-        dispatch({ type: CHECK_ITEM, payload: itemData });
-        window.location.href = window.location.origin + "/#/tasks";
-      }
-    })
-    .catch((err) => {
-      alert("ERROR: Deze QR code is niet bekend");
-      console.log(
-        "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
-      );
-    });
-};
-
-export const checkPlaatsAPI = (qr_string) => (dispatch) => {
-  const requestData = {
-    place: qr_string,
+    return axios
+      .post("/check_place", requestData)
+      .then((response) => {
+        if (response.data.message !== "Valide QR Code") {
+          alert("Er kon geen data worden opgehaald voor dit item");
+          return;
+        } else {
+          const itemData = {
+            place: response.data.data.place,
+            warehouse: response.data.data.warehouse,
+            path: response.data.data.path,
+            rack: response.data.data.rack,
+            floor: response.data.data.floor,
+            place_number: response.data.data.place_number,
+            item: response.data.data.item,
+          };
+          if (redirect) {
+            dispatch({ type: CHECK_PLAATS, payload: itemData });
+            window.location.href = window.location.origin + "/#/tasks";
+          } else {
+            return itemData;
+          }
+        }
+      })
+      .catch((err) => {
+        alert("ERROR: Deze QR code is niet bekend");
+        console.log(
+          "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
+        );
+      });
   };
 
-  axios
-    .post("/check_place", requestData)
-    .then((response) => {
-      if (response.data.message !== "Valide QR Code") {
-        alert("Er kon geen data worden opgehaald voor dit item");
-        return;
-      } else {
-        const itemData = {
-          place: response.data.data.place,
-          warehouse: response.data.data.warehouse,
-          path: response.data.data.path,
-          rack: response.data.data.rack,
-          floor: response.data.data.floor,
-          place_number: response.data.data.place_number,
-          item: response.data.data.item,
-        };
-
-        dispatch({ type: CHECK_PLAATS, payload: itemData });
-        window.location.href = window.location.origin + "/#/tasks";
-      }
-    })
-    .catch((err) => {
-      alert("ERROR: Deze QR code is niet bekend");
-      console.log(
-        "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
-      );
-    });
-};
-
-export const moveItemAPI = (label, place) => () => {
+export const moveItemAPI = (label, place) => (dispatch) => {
   const requestData = {
     label: label,
     place: place,

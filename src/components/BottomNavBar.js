@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../styles/BottomNavBar.scss";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import HomeIcon from "@material-ui/icons/Home";
+import SearchIcon from "@material-ui/icons/Search";
 
 export default function BottomNavBar(props) {
   return (
@@ -22,6 +23,11 @@ export default function BottomNavBar(props) {
         <Link to="/tasks" style={{ textDecoration: "none" }}>
           <li>
             <MenuIcon />
+          </li>
+        </Link>
+        <Link to="/check" style={{ textDecoration: "none" }}>
+          <li>
+            <SearchIcon />
           </li>
         </Link>
       </ul>
