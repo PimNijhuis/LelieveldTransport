@@ -8,6 +8,7 @@ import {
   DEFECT_OPSLAAN,
   CHECK_ITEM,
   CHECK_PLAATS,
+  MOVE_ITEM,
 } from "./actionTypes";
 
 export const defectOpslaan = (qr_string) => (dispatch) => {
@@ -28,6 +29,9 @@ export const inslagAanmeldenAPI = (qr_string) => (dispatch) => {
         return;
       } else if (response.data.message === "Pallet is al weggezet!") {
         alert("Dit pallet is reeds weggezet!");
+        return;
+      } else if (response.data.code === 500) {
+        alert("Verkeerde code gescanned");
         return;
       } else {
         const itemData = {
@@ -225,6 +229,9 @@ export const checkItemAPI =
         if (response.data.message !== "Valide QR Code") {
           alert("Er kon geen data worden opgehaald voor dit item");
           return;
+        } else if (response.data.code === 500) {
+          alert("Verkeerde code gescanned");
+          return;
         } else {
           const itemData = {
             label: response.data.data.label,
@@ -264,6 +271,9 @@ export const checkPlaatsAPI =
         if (response.data.message !== "Valide QR Code") {
           alert("Er kon geen data worden opgehaald voor dit item");
           return;
+        } else if (response.data.code === 500) {
+          alert("Verkeerde code gescanned");
+          return;
         } else {
           const itemData = {
             place: response.data.data.place,
@@ -299,22 +309,15 @@ export const moveItemAPI = (label, place) => (dispatch) => {
   axios
     .post("/move_item", requestData)
     .then((response) => {
-      if (response.data.message !== "Valide QR Code") {
+      if (!response.data.message) {
         alert("Er kon geen data worden opgehaald voor dit item");
         return;
       } else {
-        const itemData = {
-          place: response.data.data.place,
-          warehouse: response.data.data.warehouse,
-          path: response.data.data.path,
-          rack: response.data.data.rack,
-          floor: response.data.data.floor,
-          place_number: response.data.data.place_number,
-          item: response.data.data.item,
-        };
-
-        dispatch({ type: CHECK_PLAATS, payload: itemData });
-        window.location.href = window.location.origin + "/#/tasks";
+        alert(response.data.message);
+        if (response.data.message === "Pallet is verplaatst!") {
+          dispatch({ type: MOVE_ITEM, payload: [] });
+          window.location.href = window.location.origin + "/#/action-menu";
+        }
       }
     })
     .catch((err) => {

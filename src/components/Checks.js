@@ -117,7 +117,7 @@ function CheckComponent(props) {
             style={{
               minWidth: "300px",
               minHeight: "150px",
-              margin: "40px 0px 0px",
+              margin: "40px 0px 30px",
               justifyContent: "space-evenly",
             }}
             onClick={() => {

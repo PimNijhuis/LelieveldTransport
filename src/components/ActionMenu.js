@@ -21,6 +21,7 @@ import { Divider } from "@material-ui/core";
 
 import logoInslag from "../assets/inslag.PNG";
 import logoUitslag from "../assets/uitslag.PNG";
+import logoMove from "../assets/move_icon.png"
 
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 
@@ -144,8 +145,8 @@ function ActionMenu(props) {
           >
             <div>
               <img
-                src={logoUitslag}
-                alt="logoUitslag"
+                src={logoMove}
+                alt="logoMove"
                 width="150"
                 height="100"
                 marginLeft="0px"

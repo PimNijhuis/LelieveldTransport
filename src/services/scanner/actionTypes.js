@@ -7,3 +7,4 @@ export const UITSLAG_AFMELDEN = "UITSLAG_AFMELDEN";
 export const DEFECT_OPSLAAN = "DEFECT_OPSLAAN";
 export const CHECK_ITEM = "CHECK_ITEM";
 export const CHECK_PLAATS = "CHECK_PLAATS";
+export const MOVE_ITEM = "MOVE_ITEM";

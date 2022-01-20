@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
+import {moveItemAPI} from "../services/scanner/actions";
 import { SingleTask } from "./SingleTask";
 import "../styles/ActionMenu.scss";
 import {
@@ -206,7 +207,9 @@ function TasksVerplaatsen(props) {
     setOpenItem(!openItem);
   };
 
-  const handleClickVerplaatsen = () => {};
+  const handleClickVerplaatsen = () => {
+    props.moveItemAPI(props.item_check_info.label, props.plaats_check_info.place)
+  };
 
   const handleClickPlaats = () => {
     setOpenPlaats(!openPlaats);
@@ -330,20 +333,20 @@ function TasksVerplaatsen(props) {
               <>
                 <ListItemText
                   primary={
-                    "Warehouse: " + props.plaats_check_info.location.warehouse
+                    "Warehouse: " + props.plaats_check_info.warehouse
                   }
                 />
                 <ListItemText
-                  primary={"Stelling:" + props.plaats_check_info.location.path}
+                  primary={"Stelling:" + props.plaats_check_info.path}
                 />
                 <ListItemText
-                  primary={"Rek: " + props.plaats_check_info.location.rack}
+                  primary={"Rek: " + props.plaats_check_info.rack}
                 />
                 <ListItemText
-                  primary={"Etage: " + props.plaats_check_info.location.floor}
+                  primary={"Etage: " + props.plaats_check_info.floor}
                 />
                 <ListItemText
-                  primary={"#" + props.plaats_check_info.location.place_number}
+                  primary={"#" + props.plaats_check_info.place_number}
                 />
               </>
             )}
@@ -390,4 +393,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   updateCurrentTaskType,
+  moveItemAPI,
 })(WhichTasksScreen);

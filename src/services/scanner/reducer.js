@@ -7,6 +7,7 @@ import {
   DEFECT_OPSLAAN,
   CHECK_ITEM,
   CHECK_PLAATS,
+  MOVE_ITEM,
 } from "./actionTypes";
 
 const initialState = {
@@ -59,6 +60,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         plaats_check_info: action.payload,
+      };
+    case MOVE_ITEM:
+      return {
+        ...state,
+        plaats_check_info: action.payload,
+        item_check_info: action.payload
       };
     default:
       return {
