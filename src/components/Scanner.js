@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import QrReader from "modern-react-qr-reader";
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 import { connect } from "react-redux";
@@ -77,6 +78,12 @@ function ScannerComponent(props) {
   const handleChange = (event) => {
     setScanType(event.target.value);
   };
+
+  useEffect(() => {
+    if (type === "onbekend") {
+      window.location.href = window.location.origin + "/#/action-menu";
+    }
+  }, []);
 
   return (
     <center>

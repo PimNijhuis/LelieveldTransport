@@ -182,7 +182,7 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
         return;
       }
 
-      if (response.data.message === "Row Marked As Picked!") {
+      if (response.data.code === 300) {
         const itemData = {
           rows: response.data.rows,
         };
@@ -194,15 +194,10 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
         } else {
           window.location.href = window.location.origin + "/#/tasks";
         }
-      } else if (response.data.message === "Row Already Marked As Picked") {
-        alert("Deze pallet is al gemarkeerd als opgehaald!");
-      } else if (
-        response.data.message ===
-        "Order Was Already Marked AS Picked And Ready!"
-      ) {
-        alert("Alle pallets zijn al opgehaald!");
-      } else if (response.data.message === "Order Picked and Ready!") {
-        alert("Alle pallets zijn opgehaald en pakbon is afgewerkt!");
+      } else if (response.data.code === 500) {
+        alert(response.data.message);
+      } else if (response.data.code === 200) {
+        alert(response.data.message);
         window.location.href = window.location.origin + "/#/action-menu";
       } else {
         alert("Deze pallet is niet correct");

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
-import {moveItemAPI} from "../services/scanner/actions";
+import { moveItemAPI } from "../services/scanner/actions";
 import { SingleTask } from "./SingleTask";
 import "../styles/ActionMenu.scss";
 import {
@@ -40,6 +40,9 @@ function WhichTasksScreen(props) {
     case "check_item_verplaatsen":
     case "check_plaats_verplaatsen":
       return TasksVerplaatsen(props);
+    case "onbekend":
+      window.location.href = window.location.origin + "/#/action-menu";
+      window.location.reload(false);
     default:
       break;
   }
@@ -127,7 +130,7 @@ function TasksUitslag(props) {
   const [hover, setHover] = useState("white");
 
   const handleClick = () => {
-    if (props.pakbon_info.code === 500) {
+    if (props.pakbon_info.code === 200 || props.pakbon_info.code === 500) {
       return;
     }
     props.updateCurrentTaskType("uitslag_afmelden", "Pallet Ophalen Uitslag");
@@ -170,11 +173,7 @@ function TasksUitslag(props) {
                 {props.pakbon_info.customer}
               </h2>
               {props.pakbon_info.code !== 500 ? (
-                <h4 style={{ marginTop: "0px" }}>
-                  {"Aantal gepicked: "}
-                  {props.pakbon_info.picked}/{props.pakbon_info.items} -{" "}
-                  {"Items:"}
-                </h4>
+                <h4 style={{ marginTop: "0px" }}>{"Items:"}</h4>
               ) : (
                 <h4 style={{ marginTop: "0px" }}>{"Items:"}</h4>
               )}
@@ -208,7 +207,10 @@ function TasksVerplaatsen(props) {
   };
 
   const handleClickVerplaatsen = () => {
-    props.moveItemAPI(props.item_check_info.label, props.plaats_check_info.place)
+    props.moveItemAPI(
+      props.item_check_info.label,
+      props.plaats_check_info.place
+    );
   };
 
   const handleClickPlaats = () => {
@@ -332,9 +334,7 @@ function TasksVerplaatsen(props) {
             ) : (
               <>
                 <ListItemText
-                  primary={
-                    "Warehouse: " + props.plaats_check_info.warehouse
-                  }
+                  primary={"Warehouse: " + props.plaats_check_info.warehouse}
                 />
                 <ListItemText
                   primary={"Stelling:" + props.plaats_check_info.path}

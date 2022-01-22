@@ -1,8 +1,8 @@
 import { UPDATE_CURRENT_TASK_TYPE } from "./actionTypes";
 
 const initialState = {
-  type: "inslag_aanmelden",
-  title: "Aanmelden pallet",
+  type: "onbekend",
+  title: "Nog geen keuze gemaakt",
 };
 
 export default function reducer(state = initialState, action) {

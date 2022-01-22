@@ -7,6 +7,12 @@ import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 
 export default function BottomNavBar(props) {
+  const doINeedToReload = () => {
+    if (window.location.hash === "#/check") {
+      window.location.reload(false);
+    }
+  };
+
   return (
     <div className="BottomNavBarWrapper fadeInDelayed">
       <ul className="BottomNavBar">
@@ -25,7 +31,11 @@ export default function BottomNavBar(props) {
             <MenuIcon />
           </li>
         </Link>
-        <Link to="/check" style={{ textDecoration: "none" }}>
+        <Link
+          to={"/check"}
+          onClick={() => doINeedToReload()}
+          style={{ textDecoration: "none" }}
+        >
           <li>
             <SearchIcon />
           </li>

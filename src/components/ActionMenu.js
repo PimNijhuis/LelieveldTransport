@@ -9,11 +9,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-
 import ExitIcon from "@material-ui/icons/ExitToApp";
-// import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -21,7 +17,8 @@ import { Divider } from "@material-ui/core";
 
 import logoInslag from "../assets/inslag.PNG";
 import logoUitslag from "../assets/uitslag.PNG";
-import logoMove from "../assets/move_icon.png"
+import logoMove from "../assets/move_icon.png";
+import SearchIcon from "@material-ui/icons/Search";
 
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 
@@ -63,7 +60,7 @@ function ActionMenu(props) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-evenly",
-          margin: "50px 0px 50px 0px",
+          margin: "20px 0px",
           // height: "300px",
         }}
       >
@@ -72,9 +69,9 @@ function ActionMenu(props) {
             color="primary"
             variant="contained"
             style={{
-              minWidth: "300px",
-              minHeight: "150px",
-              margin: "40px 0px 0px",
+              width: "300px",
+              height: "100%",
+              margin: "20px 0px 0px",
               justifyContent: "space-between",
             }}
             onClick={() =>
@@ -103,9 +100,9 @@ function ActionMenu(props) {
             color="primary"
             variant="contained"
             style={{
-              minWidth: "300px",
-              minHeight: "150px",
-              margin: "40px 0px 0px",
+              width: "300px",
+              height: "100%",
+              margin: "20px 0px 0px",
               justifyContent: "space-evenly",
             }}
             onClick={() =>
@@ -131,9 +128,9 @@ function ActionMenu(props) {
             color="primary"
             variant="contained"
             style={{
-              minWidth: "300px",
-              minHeight: "150px",
-              margin: "40px 0px 0px",
+              width: "300px",
+              height: "100%",
+              margin: "20px 0px 0px",
               justifyContent: "space-between",
             }}
             onClick={() =>
@@ -143,18 +140,33 @@ function ActionMenu(props) {
               )
             }
           >
-            <div>
-              <img
-                src={logoMove}
-                alt="logoMove"
-                width="150"
-                height="100"
-                marginLeft="0px"
-              />
+            <div style={{ paddingLeft: "15px" }}>
+              <img src={logoMove} alt="logoMove" width="90" height="90" />
             </div>
             <h3 style={{ textTransform: "none", marginRight: "30px" }}>
               {"Verplaatsen"}
             </h3>
+          </Button>
+        </Link>
+        <Link to={"/check"} style={{ textDecoration: "none" }}>
+          <Button
+            color="primary"
+            variant="contained"
+            style={{
+              width: "300px",
+              height: "100px",
+              margin: "20px 0px 0px",
+              justifyContent: "space-evenly",
+              marginBottom: "20px",
+            }}
+            onClick={() =>
+              props.updateCurrentTaskType("onbekend", "Nog geen keuze gemaakt")
+            }
+          >
+            <h3 style={{ textTransform: "none" }}>{"Check item of plaats"}</h3>
+            <div style={{ color: "black" }}>
+              <SearchIcon fontSize="large" />
+            </div>
           </Button>
         </Link>
       </div>
@@ -163,36 +175,7 @@ function ActionMenu(props) {
         style={{
           bottom: "0%",
         }}
-      >
-        <Divider />
-        <List component="nav" aria-labelledby="nested-list-subheader">
-          <ListItem button onClick={handleClickOpen}>
-            <ListItemIcon>
-              <ExitIcon />
-            </ListItemIcon>
-            <ListItemText primary="Uitloggen" />
-          </ListItem>
-        </List>
-        <Dialog
-          open={open}
-          onClose={handleNo} // makes it possible to click outside the dialog window to close it
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Weet u zeker dat u wilt uitloggen?"}
-          </DialogTitle>
-
-          <DialogActions>
-            <Button onClick={handleNo} color="primary">
-              Nee
-            </Button>
-            <Button onClick={handleYes} color="primary" autoFocus>
-              Ja
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </center>
+      ></center>
     </div>
   );
 }
