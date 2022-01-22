@@ -1,13 +1,15 @@
 import React from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import axios from "axios";
+import requireAuth from "./utils/requireAuth";
 
 import Login from "./screens/LoginView";
 import Tasks from "./screens/TasksView";
 import Scanner from "./screens/ScannerView";
 import ActionMenu from "./screens/ActionMenuView";
 import CameraDefect from "./screens/CameraDefectView";
-import requireAuth from "./utils/requireAuth";
+import Check from "./screens/CheckView";
+
 //Set Axios Defaults
 axios.defaults.baseURL = "https://lelieveld.suppliershub.eu/wmsapi/";
 
@@ -39,6 +41,7 @@ export default function App({ history }) {
       <Route path="/scanner" component={requireAuth(Scanner)} />
       <Route path="/action-menu" component={requireAuth(ActionMenu)} />
       <Route path="/camera-defect" component={requireAuth(CameraDefect)} />
+      <Route path="/check" component={requireAuth(Check)} />
     </HashRouter>
   );
 }

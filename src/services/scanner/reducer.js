@@ -5,6 +5,9 @@ import {
   UITSLAG_AANMELDEN_ROWS,
   UITSLAG_AFMELDEN,
   DEFECT_OPSLAAN,
+  CHECK_ITEM,
+  CHECK_PLAATS,
+  MOVE_ITEM,
 } from "./actionTypes";
 
 const initialState = {
@@ -12,6 +15,8 @@ const initialState = {
   pakbon_info: [],
   pakbon_rijen: [],
   defect_qr: "",
+  item_check_info: [],
+  plaats_check_info: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -45,6 +50,22 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         defect_qr: action.payload,
+      };
+    case CHECK_ITEM:
+      return {
+        ...state,
+        item_check_info: action.payload,
+      };
+    case CHECK_PLAATS:
+      return {
+        ...state,
+        plaats_check_info: action.payload,
+      };
+    case MOVE_ITEM:
+      return {
+        ...state,
+        plaats_check_info: action.payload,
+        item_check_info: action.payload
       };
     default:
       return {

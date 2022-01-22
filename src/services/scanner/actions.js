@@ -6,6 +6,9 @@ import {
   UITSLAG_AANMELDEN_ROWS,
   UITSLAG_AFMELDEN,
   DEFECT_OPSLAAN,
+  CHECK_ITEM,
+  CHECK_PLAATS,
+  MOVE_ITEM,
 } from "./actionTypes";
 
 export const defectOpslaan = (qr_string) => (dispatch) => {
@@ -26,6 +29,9 @@ export const inslagAanmeldenAPI = (qr_string) => (dispatch) => {
         return;
       } else if (response.data.message === "Pallet is al weggezet!") {
         alert("Dit pallet is reeds weggezet!");
+        return;
+      } else if (response.data.code === 500) {
+        alert("Verkeerde code gescanned");
         return;
       } else {
         const itemData = {
@@ -95,6 +101,10 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
         if (response.data.code === 500) {
           alert("Deze Order is reeds verwerkt!");
         }
+        if (response.data.code === 400) {
+          alert("Order nog niet gereed voor uitslag!");
+          return;
+        }
         const itemData = {
           orderdate: response.data.orderdate,
           customer: response.data.customer,
@@ -130,6 +140,9 @@ export const uitslagAanmeldenRowsAPI = (qr_string) => (dispatch) => {
     .then((response) => {
       if (response.data.length === 0) {
         //to skip this call if first one fails
+        return;
+      }
+      if (response.data.code === 400) {
         return;
       }
       console.dir(response.data);
@@ -199,6 +212,118 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
       alert("ERROR: Deze Plaats-QR code is niet bekend");
       console.log(
         "[scanner.actions.js] inslagAfmeldenAPI || Could not fetch item data. Try again later."
+      );
+    });
+};
+
+export const checkItemAPI =
+  (qr_string, redirect = true) =>
+  (dispatch) => {
+    const requestData = {
+      label: qr_string,
+    };
+
+    return axios
+      .post("/check_item", requestData)
+      .then((response) => {
+        if (response.data.message !== "Valide QR Code") {
+          alert("Er kon geen data worden opgehaald voor dit item");
+          return;
+        } else if (response.data.code === 500) {
+          alert("Verkeerde code gescanned");
+          return;
+        } else {
+          const itemData = {
+            label: response.data.data.label,
+            sku: response.data.data.sku,
+            supplier: response.data.data.supplier,
+            customer: response.data.data.customer,
+            location: response.data.data.location,
+            product_name: response.data.data.product_name,
+          };
+          if (redirect) {
+            dispatch({ type: CHECK_ITEM, payload: itemData });
+            window.location.href = window.location.origin + "/#/tasks";
+          } else {
+            //console.dir(itemData);
+            return itemData;
+          }
+        }
+      })
+      .catch((err) => {
+        alert("ERROR: Deze QR code is niet bekend");
+        console.log(
+          "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
+        );
+      });
+  };
+
+export const checkPlaatsAPI =
+  (qr_string, redirect = true) =>
+  (dispatch) => {
+    const requestData = {
+      place: qr_string,
+    };
+
+    return axios
+      .post("/check_place", requestData)
+      .then((response) => {
+        if (response.data.message !== "Valide QR Code") {
+          alert("Er kon geen data worden opgehaald voor dit item");
+          return;
+        } else if (response.data.code === 500) {
+          alert("Verkeerde code gescanned");
+          return;
+        } else {
+          const itemData = {
+            place: response.data.data.place,
+            warehouse: response.data.data.warehouse,
+            path: response.data.data.path,
+            rack: response.data.data.rack,
+            floor: response.data.data.floor,
+            place_number: response.data.data.place_number,
+            item: response.data.data.item,
+          };
+          if (redirect) {
+            dispatch({ type: CHECK_PLAATS, payload: itemData });
+            window.location.href = window.location.origin + "/#/tasks";
+          } else {
+            return itemData;
+          }
+        }
+      })
+      .catch((err) => {
+        alert("ERROR: Deze QR code is niet bekend");
+        console.log(
+          "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
+        );
+      });
+  };
+
+export const moveItemAPI = (label, place) => (dispatch) => {
+  const requestData = {
+    label: label,
+    place: place,
+  };
+
+  axios
+    .post("/move_item", requestData)
+    .then((response) => {
+      if (!response.data.message) {
+        alert("Er kon geen data worden opgehaald voor dit item");
+        return;
+      } else {
+        alert(response.data.message);
+        if (response.data.message === "Pallet is verplaatst!") {
+          dispatch({ type: MOVE_ITEM, payload: [] });
+          window.location.href = window.location.origin + "/#/action-menu";
+        }
+      }
+    })
+    .catch((err) => {
+      alert("ERROR: Deze QR code is niet bekend");
+      console.log(
+        "[scanner.actions.js] checkItemAPI || Could not fetch item data. Try again later."
       );
     });
 };
