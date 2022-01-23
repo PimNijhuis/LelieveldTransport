@@ -15,6 +15,7 @@ function CheckComponent(props) {
 
   const displayData = () => {
     if (scanType === "Plaats") {
+      plaatsData ? console.log(plaatsData) : window.location.reload(false);
       return (
         <List
           component="div"
@@ -26,9 +27,18 @@ function CheckComponent(props) {
           <ListItemText primary={"Rek: " + plaatsData.rack} />
           <ListItemText primary={"Etage: " + plaatsData.floor} />
           <ListItemText primary={"#" + plaatsData.place_number} />
+          <ListItemText primary={"Status: " + plaatsData.status} />
+          <center>
+            <Divider style={{ height: "2px", width: "50%" }} />
+          </center>
+          <ListItemText primary={plaatsData.item.customer} />
+          <ListItemText primary={plaatsData.item.supplier} />
+          <ListItemText primary={plaatsData.item.product_name} />
+          <ListItemText primary={plaatsData.item.sku} />
         </List>
       );
     } else if (scanType === "Item") {
+      itemData ? console.log(itemData) : window.location.reload(false);
       return (
         <List
           component="div"
@@ -42,6 +52,7 @@ function CheckComponent(props) {
           <center>
             <Divider style={{ height: "2px", width: "50%" }} />
           </center>
+          <ListItemText primary={"Status: " + itemData.location.status} />
           <ListItemText primary={"Warehouse: " + itemData.location.warehouse} />
           <ListItemText primary={"Stelling:" + itemData.location.path} />
           <ListItemText primary={"Rek: " + itemData.location.rack} />
@@ -65,11 +76,13 @@ function CheckComponent(props) {
           if (scanType === "Plaats") {
             console.log(scanType);
             props.checkPlaatsAPI(data, false).then((plaats_response) => {
+              console.log(plaats_response)
               setPlaatsData(plaats_response);
               setScanned(true);
             });
           } else if (scanType === "Item") {
             props.checkItemAPI(data, false).then((item_response) => {
+              console.log(item_response)
               setItemData(item_response);
               setScanned(true);
             });

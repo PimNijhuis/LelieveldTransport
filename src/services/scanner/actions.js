@@ -235,6 +235,7 @@ export const checkItemAPI =
             customer: response.data.data.customer,
             location: response.data.data.location,
             product_name: response.data.data.product_name,
+
           };
           if (redirect) {
             dispatch({ type: CHECK_ITEM, payload: itemData });
@@ -277,6 +278,7 @@ export const checkPlaatsAPI =
             rack: response.data.data.rack,
             floor: response.data.data.floor,
             place_number: response.data.data.place_number,
+            status: response.data.data.status,
             item: response.data.data.item,
           };
           if (redirect) {
