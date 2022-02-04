@@ -8,6 +8,7 @@ import {
   CHECK_ITEM,
   CHECK_PLAATS,
   MOVE_ITEM,
+  MOVE_ITEM_FAILED_PLACE,
 } from "./actionTypes";
 
 const initialState = {
@@ -65,7 +66,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         plaats_check_info: action.payload,
-        item_check_info: action.payload
+        item_check_info: action.payload,
+      };
+    case MOVE_ITEM_FAILED_PLACE:
+      return {
+        ...state,
+        plaats_check_info: action.payload,
       };
     default:
       return {

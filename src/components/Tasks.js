@@ -16,18 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import forklift from "../assets/forklift.png";
 import idle from "../assets/idle.jpg";
-// import ListSubheader from "@mui/material/ListSubheader";
-// import List from "@mui/material/List";
-// import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemIcon from "@mui/material/ListItemIcon";
-// import ListItemText from "@mui/material/ListItemText";
-// import Collapse from "@mui/material/Collapse";
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
-// import DraftsIcon from "@mui/icons-material/Drafts";
-// import SendIcon from "@mui/icons-material/Send";
-// import ExpandLess from "@mui/icons-material/ExpandLess";
-// import ExpandMore from "@mui/icons-material/ExpandMore";
-// import StarBorder from "@mui/icons-material/StarBorder";
+import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 
 function WhichTasksScreen(props) {
   switch (props.type) {
@@ -200,7 +189,7 @@ function TasksUitslag(props) {
 
 function TasksVerplaatsen(props) {
   const [openItem, setOpenItem] = useState(true);
-  const [openPlaats, setOpenPlaats] = useState(false);
+  const [openPlaats, setOpenPlaats] = useState(true);
 
   const handleClickItem = () => {
     setOpenItem(!openItem);
@@ -216,6 +205,7 @@ function TasksVerplaatsen(props) {
   const handleClickPlaats = () => {
     setOpenPlaats(!openPlaats);
   };
+
   if (props.item_check_info.length === 0) {
     return (
       <div>
@@ -242,14 +232,12 @@ function TasksVerplaatsen(props) {
             paddingTop: "20px",
             marginTop: "20px",
             height: "50px",
-            // paddingBottom: "5px",
           }}
         >
           <ListItemText
             style={{
               textDecoration: "none",
               marginTop: "5px",
-              // marginBottom: "0px",
             }}
           >
             <h3>Item info</h3>
@@ -268,23 +256,20 @@ function TasksVerplaatsen(props) {
             <ListItemText primary={props.item_check_info.supplier} />
             <ListItemText primary={props.item_check_info.sku} />
             <ListItemText primary={props.item_check_info.product_name} />
-            <center>
-              <Divider style={{ height: "2px", width: "50%" }} />
-            </center>
+
             <ListItemText
-              primary={"Warehouse: " + props.item_check_info.location.warehouse}
-            />
-            <ListItemText
-              primary={"Stelling:" + props.item_check_info.location.path}
-            />
-            <ListItemText
-              primary={"Rek: " + props.item_check_info.location.rack}
-            />
-            <ListItemText
-              primary={"Etage: " + props.item_check_info.location.floor}
-            />
-            <ListItemText
-              primary={"#" + props.item_check_info.location.place_number}
+              primary={
+                props.item_check_info.location.warehouse +
+                " " +
+                props.item_check_info.location.path +
+                " " +
+                props.item_check_info.location.rack +
+                " " +
+                "#" +
+                props.item_check_info.location.place_number +
+                " " +
+                props.item_check_info.location.floor
+              }
             />
           </List>
         </Collapse>
@@ -313,43 +298,78 @@ function TasksVerplaatsen(props) {
         )}
         <Collapse in={openPlaats} timeout="auto" unmountOnExit>
           <List component="div" style={{ paddingLeft: "16px" }}>
-            <Link to={"/scanner"} style={{ textDecoration: "none" }}>
-              <Button
-                variant={"contained"}
-                color={"primary"}
-                style={{ textDecoration: "none", marginTop: "10px" }}
-                onClick={() =>
-                  props.updateCurrentTaskType(
-                    "check_plaats_verplaatsen",
-                    "Nieuwe plaats pallet"
-                  )
-                }
-              >
-                <h4>Scan een plaats</h4>
-              </Button>
-            </Link>
-            <br />
             {props.plaats_check_info.length === 0 ? (
               <></>
             ) : (
               <>
-                <ListItemText
-                  primary={"Warehouse: " + props.plaats_check_info.warehouse}
-                />
-                <ListItemText
-                  primary={"Stelling:" + props.plaats_check_info.path}
-                />
-                <ListItemText
-                  primary={"Rek: " + props.plaats_check_info.rack}
-                />
-                <ListItemText
-                  primary={"Etage: " + props.plaats_check_info.floor}
-                />
-                <ListItemText
-                  primary={"#" + props.plaats_check_info.place_number}
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <ListItemText
+                    style={{ display: "inline-block" }}
+                    primary={
+                      props.item_check_info.location.warehouse +
+                      " " +
+                      props.item_check_info.location.path +
+                      " " +
+                      props.item_check_info.location.rack +
+                      " " +
+                      "#" +
+                      props.item_check_info.location.place_number +
+                      " " +
+                      props.item_check_info.location.floor
+                    }
+                  />
+                  <ArrowRightAltIcon
+                    style={{
+                      height: "35px",
+                      verticalAlign: "middle",
+                    }}
+                  />
+                  <ListItemText
+                    style={{ display: "inline-block" }}
+                    primary={
+                      props.plaats_check_info.warehouse +
+                      " " +
+                      props.plaats_check_info.path +
+                      " " +
+                      props.plaats_check_info.rack +
+                      " " +
+                      "#" +
+                      props.plaats_check_info.place_number +
+                      " " +
+                      props.plaats_check_info.floor
+                    }
+                  />
+                </div>
               </>
             )}
+            <Link to={"/scanner"} style={{ textDecoration: "none" }}>
+              <center>
+                <Button
+                  variant={"contained"}
+                  color={"primary"}
+                  style={{ textDecoration: "none", marginTop: "10px" }}
+                  onClick={() =>
+                    props.updateCurrentTaskType(
+                      "check_plaats_verplaatsen",
+                      "Nieuwe plaats pallet"
+                    )
+                  }
+                >
+                  <h4>
+                    {props.plaats_check_info.length === 0
+                      ? "Scan een plaats"
+                      : "Scan een andere plaats"}
+                  </h4>
+                </Button>
+              </center>
+            </Link>
           </List>
         </Collapse>
         {props.plaats_check_info.length === 0 ? (

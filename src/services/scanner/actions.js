@@ -9,6 +9,7 @@ import {
   CHECK_ITEM,
   CHECK_PLAATS,
   MOVE_ITEM,
+  MOVE_ITEM_FAILED_PLACE,
 } from "./actionTypes";
 
 export const defectOpslaan = (qr_string) => (dispatch) => {
@@ -235,7 +236,6 @@ export const checkItemAPI =
             customer: response.data.data.customer,
             location: response.data.data.location,
             product_name: response.data.data.product_name,
-
           };
           if (redirect) {
             dispatch({ type: CHECK_ITEM, payload: itemData });
@@ -265,7 +265,7 @@ export const checkPlaatsAPI =
       .post("/check_place", requestData)
       .then((response) => {
         if (response.data.message !== "Valide QR Code") {
-          alert("Er kon geen data worden opgehaald voor dit item");
+          alert("Er kon geen data worden opgehaald voor deze plek");
           return;
         } else if (response.data.code === 500) {
           alert("Verkeerde code gescanned");
@@ -281,9 +281,12 @@ export const checkPlaatsAPI =
             status: response.data.data.status,
             item: response.data.data.item,
           };
-          if (redirect) {
+
+          if (redirect && itemData.status === "Leeg") {
             dispatch({ type: CHECK_PLAATS, payload: itemData });
             window.location.href = window.location.origin + "/#/tasks";
+          } else if (redirect) {
+            alert("Deze plek is niet beschikbaar");
           } else {
             return itemData;
           }
@@ -311,9 +314,16 @@ export const moveItemAPI = (label, place) => (dispatch) => {
         return;
       } else {
         alert(response.data.message);
-        if (response.data.message === "Pallet is verplaatst!") {
+        if (response.data.code === 500) {
+          // plaats niet beschikbaar
+          dispatch({ type: MOVE_ITEM_FAILED_PLACE, payload: [] });
+          window.location.href = window.location.origin + "/#/scanner";
+        } else if (response.data.code === 200) {
+          // plaats beschikbaar
           dispatch({ type: MOVE_ITEM, payload: [] });
           window.location.href = window.location.origin + "/#/action-menu";
+        } else {
+          console.log("ERROR: geen goede code ontvangen");
         }
       }
     })

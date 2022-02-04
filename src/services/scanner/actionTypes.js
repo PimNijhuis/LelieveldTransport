@@ -8,3 +8,4 @@ export const DEFECT_OPSLAAN = "DEFECT_OPSLAAN";
 export const CHECK_ITEM = "CHECK_ITEM";
 export const CHECK_PLAATS = "CHECK_PLAATS";
 export const MOVE_ITEM = "MOVE_ITEM";
+export const MOVE_ITEM_FAILED_PLACE = "MOVE_ITEM_FAILED_PLACE";
