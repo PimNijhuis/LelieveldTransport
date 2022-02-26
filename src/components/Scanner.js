@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import QrReader from "modern-react-qr-reader";
+import React, { useState, useEffect, useRef } from "react";
 import { updateCurrentTaskType } from "../services/currentTaskType/actions";
 import { connect } from "react-redux";
 import {
@@ -15,11 +13,14 @@ import {
 } from "../services/scanner/actions";
 import { validQR } from "../services/cameraDefect/actions";
 import Button from "@material-ui/core/Button";
+import Scanner from "./ScannerCode128";
 
 function ScannerComponent(props) {
   const type = props.type;
   const [scanType, setScanType] = useState("Pallet/Plaats Scannen");
   const [whichButton, setWhichButton] = useState("Probleem melden");
+  const [readyToScan, setReadyToScan] = useState(true); // To avoid scanning an object multiple times; work around for async / await
+  const scannerRef = useRef(null);
 
   useEffect(() => {
     setWhichButton(
@@ -66,8 +67,10 @@ function ScannerComponent(props) {
   };
 
   const handleScan = (data) => {
-    if (data) {
+    if (data && readyToScan) {
+      setReadyToScan(false);
       fetchLabel(data);
+      setReadyToScan(true);
     }
   };
 
@@ -88,7 +91,24 @@ function ScannerComponent(props) {
   return (
     <center>
       <div className="contentWrapper" style={{ marginTop: "15px" }}>
-        <QrReader onError={handleError} onScan={handleScan} />
+        <div>
+          <div ref={scannerRef} style={{ position: "relative" }}>
+            <canvas
+              className="drawingBuffer"
+              style={{
+                position: "relative",
+                top: "0px",
+                height: "100%",
+                width: "100%",
+              }}
+            />
+            <Scanner
+              scannerRef={scannerRef}
+              onDetected={(barcode) => handleScan(barcode)}
+            />
+          </div>
+        </div>
+
         <Button
           color={"primary"}
           variant={"contained"}

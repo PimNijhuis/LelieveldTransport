@@ -50,6 +50,7 @@ export function SingleTask(props) {
               {rowData.warehouse} - {"Stelling: " + rowData.stelling} -{" "}
               {"Rek: " + rowData.rack} - {"Etage: " + rowData.level}{" "}
               {"#" + rowData.number}
+              {/* TODO controleer of dit nog werkt */}
             </Typography>{" "}
           </Box>
         </div>

@@ -265,7 +265,6 @@ function TasksVerplaatsen(props) {
                 " " +
                 props.item_check_info.location.rack +
                 " " +
-                "#" +
                 props.item_check_info.location.place_number +
                 " " +
                 props.item_check_info.location.floor
@@ -319,7 +318,6 @@ function TasksVerplaatsen(props) {
                       " " +
                       props.item_check_info.location.rack +
                       " " +
-                      "#" +
                       props.item_check_info.location.place_number +
                       " " +
                       props.item_check_info.location.floor
@@ -340,7 +338,6 @@ function TasksVerplaatsen(props) {
                       " " +
                       props.plaats_check_info.rack +
                       " " +
-                      "#" +
                       props.plaats_check_info.place_number +
                       " " +
                       props.plaats_check_info.floor

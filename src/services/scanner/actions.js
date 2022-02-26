@@ -26,7 +26,7 @@ export const inslagAanmeldenAPI = (qr_string) => (dispatch) => {
     .post("/item", requestData)
     .then((response) => {
       if (response.data.token === "Missing or False") {
-        alert("Deze QR code is niet bekend");
+        alert("U bent per ongeluk uitgemeld, log opnieuw in");
         return;
       } else if (response.data.message === "Pallet is al weggezet!") {
         alert("Dit pallet is reeds weggezet!");
@@ -96,7 +96,7 @@ export const uitslagAanmeldenInfoAPI = (qr_string) => (dispatch) => {
     .then((response) => {
       console.dir(response.data);
       if (response.data.token === "Missing or False") {
-        alert("Deze QR code is niet bekend");
+        alert("U bent per ongeluk uitgemeld, log opnieuw in");
         return;
       } else {
         if (response.data.code === 500) {
@@ -148,7 +148,7 @@ export const uitslagAanmeldenRowsAPI = (qr_string) => (dispatch) => {
       }
       console.dir(response.data);
       if (response.data.token === "Missing or False") {
-        alert("Deze QR code is niet bekend");
+        alert("U bent per ongeluk uitgemeld, log opnieuw in");
         return;
       } else {
         const itemData = {
@@ -179,7 +179,7 @@ export const uitslagAfmeldenAPI = (order, qr_string) => (dispatch) => {
     .then((response) => {
       console.dir(response.data);
       if (response.data.token === "Missing or False") {
-        alert("Deze QR code is niet bekend");
+        alert("U bent per ongeluk uitgemeld, log opnieuw in");
         return;
       }
 
@@ -222,8 +222,8 @@ export const checkItemAPI =
     return axios
       .post("/check_item", requestData)
       .then((response) => {
-        if (response.data.message !== "Valide QR Code") {
-          alert("Er kon geen data worden opgehaald voor dit item");
+        if (response.data.code !== 200) {
+          alert(response.data.message);
           return;
         } else if (response.data.code === 500) {
           alert("Verkeerde code gescanned");
@@ -264,8 +264,8 @@ export const checkPlaatsAPI =
     return axios
       .post("/check_place", requestData)
       .then((response) => {
-        if (response.data.message !== "Valide QR Code") {
-          alert("Er kon geen data worden opgehaald voor deze plek");
+        if (response.data.code !== 200) {
+          alert(response.data.message);
           return;
         } else if (response.data.code === 500) {
           alert("Verkeerde code gescanned");
