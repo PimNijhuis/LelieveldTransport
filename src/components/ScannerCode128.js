@@ -79,21 +79,21 @@ const Scanner = ({
           parseInt(drawingCanvas.getAttribute("width")),
           parseInt(drawingCanvas.getAttribute("height"))
         );
-        result.boxes
-          .filter((box) => box !== result.box)
-          .forEach((box) => {
-            Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
-              color: "#ffd60b",
-              lineWidth: 2,
-            });
-          });
+        // result.boxes
+        //   .filter((box) => box !== result.box)
+        //   .forEach((box) => {
+        //     Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
+        //       color: "#ffd60b",
+        //       lineWidth: 0,
+        //     });
+        //   });
       }
-      if (result.box) {
-        Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
-          color: "#4bb543",
-          lineWidth: 2,
-        });
-      }
+      // if (result.box) {
+      //   Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
+      //     color: "#4bb543",
+      //     lineWidth: 0,
+      //   });
+      // }
       if (result.codeResult && result.codeResult.code) {
         // const validated = barcodeValidator(result.codeResult.code);
         // const validated = validateBarcode(result.codeResult.code);
