@@ -165,11 +165,11 @@ function CheckComponent(props) {
                     <canvas
                       className="drawingBuffer"
                       style={{
-                        position: "absolute",
+                        position: "relative",
                         top: "0px",
                         // left: '0px',
-                        height: window.outerHeight - 300,
-                        width: window.outerWidth - 50,
+                        height: "100%",
+                        width: "100%",
                       }}
                     />
                     <Scanner
