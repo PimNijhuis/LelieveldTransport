@@ -91,22 +91,31 @@ function ScannerComponent(props) {
   return (
     <center>
       <div className="contentWrapper" style={{ marginTop: "15px" }}>
-        <div>
-          <div ref={scannerRef} style={{ position: "relative" }}>
-            <canvas
-              className="drawingBuffer"
-              style={{
-                position: "relative",
-                top: "0px",
-                height: "100%",
-                width: "100%",
-              }}
-            />
-            <Scanner
-              scannerRef={scannerRef}
-              onDetected={(barcode) => handleScan(barcode)}
-            />
-          </div>
+        <div
+          ref={scannerRef}
+          style={{ position: "relative", marginBottom: "15px" }}
+        >
+          <video
+            style={{
+              position: "absolute",
+              left: "0px",
+              width: "100%",
+            }}
+          />
+          {/* <canvas
+            style={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+            }}
+            width={"350px"}
+            height={"600px"}
+          /> */}
+
+          <Scanner
+            scannerRef={scannerRef}
+            onDetected={(barcode) => handleScan(barcode)}
+          />
         </div>
 
         <Button
