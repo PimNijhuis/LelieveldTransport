@@ -102,7 +102,7 @@ function ScannerComponent(props) {
               width: "100%",
             }}
           />
-          <canvas
+          {/* <canvas
             style={{
               position: "absolute",
               top: "0px",
@@ -110,7 +110,7 @@ function ScannerComponent(props) {
             }}
             width={"350px"}
             height={"600px"}
-          />
+          /> */}
 
           <Scanner
             scannerRef={scannerRef}
