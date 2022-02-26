@@ -6,10 +6,10 @@ export const validQR = (qr_string) => {
   };
 
   return axios
-    .post("/check_qrcode", requestData)
+    .post("/check_barcode", requestData)
     .then((response) => {
       if (response.data.token === "Missing or False") {
-        alert("Deze QR code is niet bekend");
+        alert("U bent per ongeluk uitgemeld, log opnieuw in");
         return;
       }
       if (response.data.code === 200) {
@@ -43,7 +43,7 @@ export const notifyProblem = (qr_string, type, description, base64) => {
     .post("/notify_problem", requestData)
     .then((response) => {
       if (response.data.token === "Missing or False") {
-        alert("Deze QR code is niet bekend");
+        alert("U bent per ongeluk uitgemeld, log opnieuw in");
         return;
       }
       if (response.data === "") {

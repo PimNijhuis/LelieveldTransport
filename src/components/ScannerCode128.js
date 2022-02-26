@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect } from "react";
+import React, { useCallback, useEffect, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import Quagga from "@ericblade/quagga2";
 
@@ -49,11 +49,17 @@ const Scanner = ({
         return;
       }
       const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
-      // if Quagga is at least 75% certain that it read correctly, then accept the code.
-      if (err < 0.25) {
+
+      const specialChars = `/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;`;
+      const isSpecialCharsPresent = specialChars
+        .split("")
+        .some((char) => result.codeResult.decodedCodes.includes(char));
+
+      // TODO: if results are not accurate, lower the error treshold
+      if (err < 0.25 && !isSpecialCharsPresent) {
         onDetected(result.codeResult.code);
-        console.dir(result);
       }
+      // }
     },
     [onDetected]
   );
@@ -77,14 +83,14 @@ const Scanner = ({
           .filter((box) => box !== result.box)
           .forEach((box) => {
             Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
-              color: "yellow",
+              color: "#ffd60b",
               lineWidth: 2,
             });
           });
       }
       if (result.box) {
         Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
-          color: "green",
+          color: "#4bb543",
           lineWidth: 2,
         });
       }
@@ -103,7 +109,8 @@ const Scanner = ({
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // useLayoutEffect(() => {
     Quagga.init(
       {
         inputStream: {

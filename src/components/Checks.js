@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import QrReader from "modern-react-qr-reader";
+import React, { useState, useRef } from "react";
+import Scanner from "./ScannerCode128";
 import { connect } from "react-redux";
 import { checkItemAPI, checkPlaatsAPI } from "../services/scanner/actions";
 import { validQR } from "../services/cameraDefect/actions";
@@ -12,6 +12,9 @@ function CheckComponent(props) {
   const [scanType, setScanType] = useState("");
   const [plaatsData, setPlaatsData] = useState([]);
   const [itemData, setItemData] = useState([]);
+  const [readyToScan, setReadyToScan] = useState(true); // To avoid scanning an object multiple times; work around for async / await
+
+  const scannerRef = useRef(null);
 
   const displayData = () => {
     if (scanType === "Plaats") {
@@ -22,11 +25,19 @@ function CheckComponent(props) {
           style={{ paddingLeft: "16px", marginTop: "15px" }}
         >
           <h2>Plaats informatie</h2>
-          <ListItemText primary={"Warehouse: " + plaatsData.warehouse} />
-          <ListItemText primary={"Stelling:" + plaatsData.path} />
+          <ListItemText
+            primary={
+              plaatsData.warehouse +
+              plaatsData.path +
+              plaatsData.rack +
+              plaatsData.place_number +
+              plaatsData.floor
+            }
+          />
+          {/* <ListItemText primary={"Stelling:" + plaatsData.path} />
           <ListItemText primary={"Rek: " + plaatsData.rack} />
           <ListItemText primary={"Etage: " + plaatsData.floor} />
-          <ListItemText primary={"#" + plaatsData.place_number} />
+          <ListItemText primary={"#" + plaatsData.place_number} /> */}
           <ListItemText primary={"Status: " + plaatsData.status} />
           <center>
             <Divider style={{ height: "2px", width: "50%" }} />
@@ -70,19 +81,20 @@ function CheckComponent(props) {
   };
 
   const handleScan = (data) => {
-    if (data) {
+    if (data && readyToScan) {
+      setReadyToScan(false);
       validQR(data).then((response) => {
         if (response) {
           if (scanType === "Plaats") {
             console.log(scanType);
             props.checkPlaatsAPI(data, false).then((plaats_response) => {
-              console.log(plaats_response)
+              console.log(plaats_response);
               setPlaatsData(plaats_response);
               setScanned(true);
             });
           } else if (scanType === "Item") {
             props.checkItemAPI(data, false).then((item_response) => {
-              console.log(item_response)
+              console.log(item_response);
               setItemData(item_response);
               setScanned(true);
             });
@@ -94,6 +106,7 @@ function CheckComponent(props) {
           return;
         }
       });
+      setReadyToScan(true);
     }
   };
 
@@ -147,7 +160,24 @@ function CheckComponent(props) {
             <center>
               <div className="contentWrapper" style={{ marginTop: "15px" }}>
                 <h1>Scan {scanType}</h1>
-                <QrReader onError={handleError} onScan={handleScan} />
+                <div>
+                  <div ref={scannerRef} style={{ position: "relative" }}>
+                    <canvas
+                      className="drawingBuffer"
+                      style={{
+                        position: "absolute",
+                        top: "0px",
+                        // left: '0px',
+                        height: window.outerHeight - 300,
+                        width: window.outerWidth - 50,
+                      }}
+                    />
+                    <Scanner
+                      scannerRef={scannerRef}
+                      onDetected={(barcode) => handleScan(barcode)}
+                    />
+                  </div>
+                </div>
               </div>
             </center>
           ) : (
