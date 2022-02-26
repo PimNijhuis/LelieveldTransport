@@ -95,32 +95,22 @@ function ScannerComponent(props) {
           ref={scannerRef}
           style={{ position: "relative", marginBottom: "15px" }}
         >
-          {/* <div style={{ height: "100%", width: "100%" }}> */}
           <video
             style={{
               position: "absolute",
-              // top: "0px",
               left: "0px",
               width: "100%",
-              // height: "100%",
-              border: "5px solid red",
             }}
           />
           <canvas
-            // className="drawingBuffer"
-            //
             style={{
               position: "absolute",
               top: "0px",
               left: "0px",
-              //   // height: "100%",
-              //   // width: "100%",
-              border: "3px solid blue",
             }}
             width={"350px"}
             height={"600px"}
           />
-          {/* </div> */}
 
           <Scanner
             scannerRef={scannerRef}
