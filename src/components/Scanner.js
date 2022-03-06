@@ -115,6 +115,7 @@ function ScannerComponent(props) {
           <Scanner
             scannerRef={scannerRef}
             onDetected={(barcode) => handleScan(barcode)}
+            facingMode={"user"} // default dit weg
           />
         </div>
 
